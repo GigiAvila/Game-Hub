@@ -1,0 +1,28 @@
+
+@font-face {
+  font-family: 'MyCustomFont';
+  src: url('./assets/Font3.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'MyCustomFont1';
+  src: url('./assets/Font.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'MyCustomFont2';
+  src: url('./assets/Font1.ttf') format('truetype');
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+
+}
+#root, body {
+  background-color: black;
+  width: 100vw;
+  height: 100vh;
+  font-family: 'MyCustomFont', sans-serif;
+}
