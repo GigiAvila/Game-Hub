@@ -200,7 +200,7 @@ const Pagina3 = () => {
           </div>
         </div>
       )}
-      {modalVisible && <Modal message="¡Encontraste una coincidencia, sigue así!" />}
+      {modalVisible && <Modal message="¡Muy bien! Ya entendiste de que va sigue así!" />}
       {allMatchesFound && (
         <Modal message="¡Felicitaciones! ¡Encontraste todas las coincidencias!" />
       )}
