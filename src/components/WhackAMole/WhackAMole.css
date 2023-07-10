@@ -1,0 +1,88 @@
+.WaMBody {
+  width: 100vw;
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1vw;
+  
+
+}
+
+.titleScoreTimeContainer  {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.titleScoreTimeContainer > h1 {
+  font-size: 3vw;
+  height: 5vh;
+  font-family: 'MyCustomFont1';
+  margin: 1vw;
+  color: white;
+
+}
+.titleScoreTimeContainer > h2 {
+  font-size: 2.3vw ;
+  font-family: 'MyCustomFont2';
+  color: white;
+
+}
+
+
+.WaMGrid {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+  width: 18rem;
+  height: 18rem;
+  margin-top: 1vh;
+}
+
+.WaMGrid > .WaMsquare {
+  width: 6rem;
+  height:6rem;
+  background-color: rgb(60, 124, 140);
+  border-style: solid;
+  border-color:#8fa9bf;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+
+.mole {
+  background-image: url(./mole1.jpeg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+
+}
+
+
+
+@media screen and (min-width: 1023px) {
+
+  .titleScoreTimeContainer > h1 {
+    font-size: 2.8vw;
+  }
+
+  .titleScoreTimeContainer > h2 {
+    font-size: 1.7vw;
+  }
+  .WaMGrid {
+    width: 30rem;
+    height: 30rem;
+  }
+
+  .WaMGrid > .WaMsquare {
+    width: 10rem;
+    height: 10rem;
+    
+  }
+}

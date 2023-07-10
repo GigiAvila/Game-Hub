@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import Header from '../components/Header';
-import Modal from '../components/Modal';
-import Loading from '../components/Loading';
-import '../Styles/Memotest.css';
-import blankImg from '../assets/blank.png';
-import memotestArray from '../data/MemotestData';
+import Header from '../components/Header/Header';
+import Modal from '../components/Modal/Modal';
+import Loading from '../components/Loading/Loading';
+import '../components/Memotest/Memotest.css';
+import blankImg from '../components/Memotest/assets-memotest/blank.png';
+import memotestArray from '../components/Memotest/MemotestData';
 
 const Pagina3 = () => {
   const memotestItem = memotestArray;
