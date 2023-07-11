@@ -1,18 +1,23 @@
 import React, { useState } from 'react';
 import './TicTacToe.css';
+import classNames from 'classnames';
 
-const Square = ({ value, onClick, turn }) => {
-  const [className, setClassName] = useState('square');
+const Square = ({ value, onClick, turn, winner }) => {
 
   const handleClick = () => {
-    if (turn !== null && value === null) {
-      onClick();
-      setClassName(`square square--${turn}`);
-    }
-  };
+    (turn !== null && value === null) && onClick();
+  }
+
+
+  let squareClass = classNames({
+    square: true,
+    [`square--${value}`]: value !== null,
+    winner: winner,
+  })
+
 
   return (
-    <div className={className} onClick={handleClick}></div>
+    <div className={squareClass} onClick={handleClick}></div>
   );
 };
 
