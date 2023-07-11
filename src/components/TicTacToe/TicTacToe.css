@@ -1,6 +1,6 @@
 
 .titleContainer {
-  font-family: 'MyCustomFont1';
+  font-family: 'SF Pixelate', sans-serif;
   color: white;
   display: flex;
   flex-direction: column;
@@ -72,7 +72,7 @@
 
 
 .score-board {
-  width: 25rem;
+  width: 10.5rem;
   display: grid;
   grid-auto-flow: column;
   margin-top: 1vh
@@ -81,6 +81,7 @@
 .score-board div {
   color: white;
   text-align: center;
+  font-family: 'SF Pixelate', sans-serif;
   font-size: 3vw;
   font-weight: bold; 
   background-color: #061484;
@@ -94,9 +95,11 @@
   .square {
     width: 8rem;
     height: 8rem;
-  
-}
+  }
 
+  .score-board {
+    width: 25rem;
+  }
 }
 
 

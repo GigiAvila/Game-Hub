@@ -35,7 +35,7 @@ const Pagina1 = () => {
   useEffect(() => {
     const loadingTimer = setTimeout(() => {
       setIsLoading(false);
-    }, 1500);
+    }, 1000);
 
     return () => clearTimeout(loadingTimer);
   }, []);
@@ -107,7 +107,7 @@ const Pagina1 = () => {
     setWinningSquares(winningPositions);
     setTimeout(() => {
       resetGame();
-    }, 3500)
+    }, 3000)
 
   };
 

@@ -1,13 +1,13 @@
 .memotestTitle{
 font-size: 3vw;
 height: 5vh;
-font-family: 'MyCustomFont1';
+font-family: 'SF Pixelate', sans-serif;
 margin: 1vw
 }
 
 .resetButton {
   font-size: 2vw ;
-  font-family: 'MyCustomFont2';
+  font-family: 'SF Pixelate', sans-serif;
 
 }
 

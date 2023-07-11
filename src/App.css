@@ -14,6 +14,9 @@
   src: url('./assets/Font1.ttf') format('truetype');
 }
 
+
+@import url('https://fonts.cdnfonts.com/css/sf-pixelate');
+
 * {
   box-sizing: border-box;
   margin: 0;

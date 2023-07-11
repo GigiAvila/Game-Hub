@@ -17,6 +17,14 @@ const Pagina3 = () => {
   const [isCheckingMatch, setIsCheckingMatch] = useState(false);
   const [allMatchesFound, setAllMatchesFound] = useState(false);
 
+
+  useEffect(() => {
+    const loadingTimer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+    return () => clearTimeout(loadingTimer);
+  }, []);
+
   useEffect(() => {
     const shuffledItems = shuffleArray(memotestItem);
     const initialItems = shuffledItems.map((item, index) => ({
@@ -26,7 +34,6 @@ const Pagina3 = () => {
       id: index + 1
     }));
     setMemotestItems(initialItems);
-    setIsLoading(false);
   }, []);
 
   const shuffleArray = (array) => {

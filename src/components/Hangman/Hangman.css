@@ -1,0 +1,29 @@
+@import url('https://fonts.cdnfonts.com/css/sf-pixelate');
+
+.hangmanContainer {
+  width: 100vw;
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1vw;
+  
+}
+
+.hangmanContainer > h1 {
+  font-size: 3vw;
+  height: 5vh;
+  font-family: 'SF Pixelate', sans-serif;
+  margin: 1vw;
+  color: white;
+}
+
+.hidden {
+  color: transparent
+}
+
+.buttonsContainer > button {
+  font-family: 'SF Pixelate', sans-serif;
+  margin: 1vw
+}
