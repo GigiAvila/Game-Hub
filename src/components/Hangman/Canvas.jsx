@@ -1,31 +1,29 @@
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 
-const Canvas = () => {
-  const canvasRef = useRef(null);
+const Canvas = ({ mistakes }) => {
+  return (
+    <svg height="250" width="200">
+      {/* Rod */}
+      <line x1="60" y1="20" x2="140" y2="20" className="rod" />
+      <line x1="140" y1="20" x2="140" y2="50" className="rod" />
+      <line x1="60" y1="20" x2="60" y2="230" className="rod" />
+      <line x1="20" y1="230" x2="100" y2="230" className="rod" />
 
-  const drawHangMan = (ctx) => {
-    ctx.canvas.width = 120;
-    ctx.canvas.height = 160;
-    ctx.scale(20, 20);
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-    ctx.fillStyle = '#FFFFFF';
-    ctx.fillRect(0, 7, 4, 1);
-    ctx.fillRect(1, 0, 1, 8);
-    ctx.fillRect(2, 0, 3, 1);
-    ctx.fillRect(4, 1, 1, 1);
-  };
+      {/* Head */}
+      {mistakes > 0 && <circle cx="140" cy="70" r="20" className="figure-part" />}
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-    drawHangMan(ctx);
-  }, []);
+      {/* Body */}
+      {mistakes > 1 && <line x1="140" y1="90" x2="140" y2="150" className="figure-part" />}
 
-  const selectRandomWord = () => {
-    const word = wordsArray[Math.floor((Math.random() * wordsArray.length))].toUpperCase();
-  }
+      {/* Arms */}
+      {mistakes > 2 && <line x1="140" y1="120" x2="120" y2="100" className="figure-part" />}
+      {mistakes > 3 && <line x1="140" y1="120" x2="160" y2="100" className="figure-part" />}
 
-  return <canvas ref={canvasRef} />;
+      {/* Legs */}
+      {mistakes > 4 && <line x1="140" y1="150" x2="120" y2="180" className="figure-part" />}
+      {mistakes > 5 && <line x1="140" y1="150" x2="160" y2="180" className="figure-part" />}
+    </svg>
+  );
 };
 
 export default Canvas;
