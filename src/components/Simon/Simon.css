@@ -1,0 +1,71 @@
+
+@import url('https://fonts.cdnfonts.com/css/sf-pixelate');
+
+body, html {
+  height: 100%;
+  margin: 0;
+}
+
+.simonContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80%; 
+  gap: 2vw;
+}
+
+.title {
+  font-family: 'SF Pixelate', sans-serif;
+  color: white;
+}
+
+.board {
+  position: relative; 
+  width: 600px;
+  height: 600px;
+  flex-wrap: wrap;
+  justify-content: center; 
+  align-items: center; 
+  background-color: grey;
+  padding: 1vw;
+  border-radius: 50%;
+  background-image: conic-gradient(
+    from 0deg,                 
+    red 0%,                    
+    red 25%,                   
+    blue 25%,                
+    blue 50%,                 
+    yellow 50%,               
+    yellow 75%,          
+    green 75%,               
+    green 100%,            
+    red 100%                  
+  );
+}
+
+.colorCard {
+  flex: 1 0 50%; 
+}
+
+
+.startButtonContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); 
+}
+
+.startButton {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-color: black;
+  color:white;
+  font-family: 'SF Pixelate', sans-serif;
+  font-size: 2vw;
+  text-align: center; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
