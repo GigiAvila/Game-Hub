@@ -12,7 +12,6 @@ import snakeImg from '../assets/snake.jpg';
 import whackAMoleImg from '../assets/whack-a-mole.jpg';
 import spaceInvadersImg from '../assets/Space-invaders.jpg';
 import froggerImg from '../assets/frogger.jpg';
-import connectDotsImg from '../assets/connectDots.jpg';
 import arrowLeftImg from '../assets/arrow-left.png';
 import arrowRightImg from '../assets/arrow-right.png';
 

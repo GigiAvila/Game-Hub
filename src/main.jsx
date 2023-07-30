@@ -29,7 +29,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/pagina6" element={<Pagina6 />} />
         <Route path="/pagina7" element={<Pagina7 />} />
         <Route path="/pagina8" element={<Pagina8 />} />
-        <Route path="/pagina8" element={<Pagina9 />} />
+        <Route path="/pagina9" element={<Pagina9 />} />
         <Route path="/pagina10" element={<Pagina10 />} />
       </Routes>
     </BrowserRouter>

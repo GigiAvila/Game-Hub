@@ -2,7 +2,7 @@ import React from 'react'
 import Header from '../components/Header/Header'
 import Loading from '../components/Loading/Loading'
 
-const Pagina9 = () => {
+const Pagina10 = () => {
   return (
     <>
       <Header />
@@ -12,4 +12,4 @@ const Pagina9 = () => {
   )
 }
 
-export default Pagina9
+export default Pagina10
