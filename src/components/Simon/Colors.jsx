@@ -5,7 +5,7 @@ const Colors = ({ color, onClick, flash }) => {
   return (
     <div
       onClick={onClick}
-      className={`colorCard ${color} ${flash ? "flash" : ""}`}>
+      className={`colorCard ${color}  ${flash ? "flash" : ""}`}>
 
     </div>
   )

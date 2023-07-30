@@ -1,12 +1,41 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Header from '../components/Header/Header';
 import Loading from '../components/Loading/Loading';
 import Colors from '../components/Simon/Colors';
+import Modal from '../components/Modal/Modal';
 import '../components/Simon/Simon.css';
+
+
+import colorSound from '../components/Simon/assets/color.mp3';
+import correctSecuenceSound from '../components/Simon/assets/correctSecuence.mp3'
+import gameOverSound from '../components/Simon/assets/gameOver.mp3';
 
 const Pagina6 = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [showModal, setShowModal] = useState(true);
+  const [isOn, setIsOn] = useState(false);
+  const [flashColor, setFlashColor] = useState("");
+  const [play, setPlay] = useState({
+    isDisplay: false,
+    colors: [],
+    score: 0,
+    userPlay: false,
+    userColors: [],
+  });
+
+  const colorList = ["green", "red", "yellow", "blue"];
+
+  const colorAudioRef = useRef(new Audio(colorSound));
+  const correctSecuenceAudioRef = useRef(new Audio(correctSecuenceSound));
+  const gameOverAudioRef = useRef(new Audio(gameOverSound));
+
+  const playSound = (audioRef) => {
+    audioRef.current.currentTime = 0;
+    audioRef.current.play();
+  };
+
+  function handleStart() {
+    setIsOn(true);
+  }
 
   useEffect(() => {
     const loadingTimer = setTimeout(() => {
@@ -16,24 +45,133 @@ const Pagina6 = () => {
     return () => clearTimeout(loadingTimer);
   }, []);
 
+  useEffect(() => {
+    if (isOn) {
+      setPlay({ ...play, isDisplay: true, colors: [] });
+    } else {
+      setPlay({
+        isDisplay: false,
+        colors: [],
+        score: 0,
+        userPlay: false,
+        userColors: [],
+      });
+    }
+  }, [isOn]);
+
+  useEffect(() => {
+    if (isOn && play.isDisplay) {
+      let newColor = colorList[Math.floor(Math.random() * 4)];
+      console.log("el prox color para hacer clic es", newColor);
+
+      setPlay((prevPlay) => ({ ...prevPlay, colors: [...prevPlay.colors, newColor] }));
+    }
+  }, [isOn, play.isDisplay]);
+
+  useEffect(() => {
+    if (isOn && play.isDisplay && play.colors.length) {
+      displayColors();
+    }
+  }, [isOn, play.isDisplay, play.colors.length]);
+
+  async function wait(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  async function displayColors() {
+    console.log("el acumulado de colores es", play.colors);
+
+    const colorsToFlash = [...play.colors];
+
+    for (let i = 0; i < play.colors.length; i++) {
+      setFlashColor(colorsToFlash[i]);
+      playSound(colorAudioRef);
+      await wait(1000);
+      setFlashColor("");
+      await wait(1000);
+    }
+
+    setPlay((prevPlay) => ({
+      ...prevPlay,
+      isDisplay: false,
+      userPlay: true,
+      userColors: [...prevPlay.colors].reverse(),
+    }));
+  }
+
+  async function handleCardClick(color) {
+    if (!play.isDisplay && play.userPlay) {
+      const remindingColors = [...play.userColors];
+      const lastColor = remindingColors.pop();
+      setFlashColor(lastColor);
+      console.log("he clickeado", lastColor);
+      console.log("colores restantes antes de pasar a la proxima ronda", remindingColors)
+
+      if (color === lastColor) {
+        if (remindingColors.length) {
+          setPlay((prevPlay) => ({ ...prevPlay, userColors: remindingColors }));
+        } else {
+          const score = play.colors.length;
+          playSound(correctSecuenceAudioRef);
+          await wait(1000); // proximo nivel
+          setPlay((prevPlay) => ({
+            ...prevPlay,
+            isDisplay: true,
+            userPlay: false,
+            score: score,
+            userColors: [],
+          }));
+        }
+      } else { // si pierde
+        playSound(gameOverAudioRef);
+        await wait(1000);
+        setPlay({ ...play, score: play.colors.length, isDisplay: false, userPlay: false, userColors: [] });
+      }
+      setFlashColor("");
+    }
+  }
+
   return (
     <>
       <Header />
       {isLoading ? (
         <Loading />
       ) : (
-        <div className='simonContainer'>
+        <div className='simonGameContainer'>
           <h1 className='title'>Simon says</h1>
-          <div className='board'>
-            <Colors color="green" />
-            <Colors color="red" />
-            <Colors color="blue" />
-            <Colors color="yellow" />
-            {/* Agregamos el contenedor para el botón START */}
-            <div className="startButtonContainer">
-              <button className='startButton'>START</button>
-            </div>
+          <div className='Simonboard'>
+            {colorList &&
+              colorList.map((v, i) => (
+                <Colors
+                  key={i}
+                  onClick={() => {
+                    handleCardClick(v);
+                    setFlashColor(v);
+                    setTimeout(() => setFlashColor(""), 300);
+                  }}
+                  flash={flashColor === v}
+                  color={v}
+                />
+              ))}
           </div>
+          {!isOn && play.score === 0 && (
+            <div className='startButtonContainer'>
+              <button onClick={handleStart} className='startButton'>
+                START
+              </button>
+            </div>
+          )}
+          {isOn && (play.isDisplay || play.userPlay) && (
+            <div className='score'>{play.score}</div>
+          )}
+          {isOn && !play.isDisplay && !play.userPlay && play.score && (
+            <Modal
+              message={`Ups! Has perdido 😢. Tu puntaje ha sido ${play.score - 1}`}
+              onClick={() => {
+                setIsOn(false);
+              }}
+            />
+          )}
         </div>
       )}
     </>
