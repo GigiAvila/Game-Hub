@@ -122,7 +122,7 @@ const Pagina1 = () => {
           <div className='titleContainer'>
             <h1>Tic Tac Toe</h1>
             <button className='resetButton' onClick={handleResetButton}>
-              Volver a empezar
+              Volver a jugar
             </button>
           </div>
           <div className='TicTacToe-container'>

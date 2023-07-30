@@ -1,77 +1,95 @@
-import facebookImg from './assets-memotest/icons8-facebook.png';
-import githubImg from './assets-memotest/icons8-github.png';
-import instagramImg from './assets-memotest/icons8-instagram.png';
-import linkedinImg from './assets-memotest/icons8-linkedin.png';
-import tiktokImg from './assets-memotest/icons8-tiktok.png';
-import twitterImg from './assets-memotest/icons8-twitter.png';
-import whatsappImg from './assets-memotest/icons8-whatsapp.png';
-import youtubeImg from './assets-memotest/icons8-youtube.png';
+import marioImg from './assets-memotest/mario.png';
+import sonicImg from './assets-memotest/sonic.png';
+import kingkongImg from './assets-memotest/kingkong.png';
+import spaceImg from './assets-memotest/space.png';
+import crashImg from './assets-memotest/crash.png';
+import wolverineImg from './assets-memotest/wolverine.png';
+import galagaImg from './assets-memotest/galaga.png';
+import metalSlugImg from './assets-memotest/metalslug.png';
+import streetfigtherImg from './assets-memotest/streetfigther.png';
+import contraImg from './assets-memotest/contra.png';
 
 const memotestArray = [
   {
-    name: 'facebook',
-    image: facebookImg,
+    name: 'streetfigther',
+    image: streetfigtherImg,
   },
   {
-    name: 'github',
-    image: githubImg,
+    name: 'kingkong',
+    image: kingkongImg,
   },
   {
-    name: 'instagram',
-    image: instagramImg,
+    name: 'space',
+    image: spaceImg,
   },
   {
-    name: 'linkedin',
-    image: linkedinImg,
+    name: 'galaga',
+    image: galagaImg,
   },
   {
-    name: 'tiktok',
-    image: tiktokImg,
+    name: 'galaga',
+    image: galagaImg,
   },
   {
-    name: 'twitter',
-    image: twitterImg,
+    name: 'wolverine',
+    image: wolverineImg,
   },
   {
-    name: 'whatsapp',
-    image: whatsappImg,
+    name: 'wolverine',
+    image: wolverineImg,
   },
   {
-    name: 'youtube',
-    image: youtubeImg,
+    name: 'mario',
+    image: marioImg,
   },
   {
-    name: 'facebook',
-    image: facebookImg,
+    name: 'kingkong',
+    image: kingkongImg,
   },
   {
-    name: 'github',
-    image: githubImg,
+    name: 'space',
+    image: spaceImg,
   },
   {
-    name: 'instagram',
-    image: instagramImg,
+    name: 'crash',
+    image: crashImg,
   },
   {
-    name: 'linkedin',
-    image: linkedinImg,
+    name: 'crash',
+    image: crashImg,
   },
   {
-    name: 'tiktok',
-    image: tiktokImg,
+    name: 'mario',
+    image: marioImg,
   },
   {
-    name: 'twitter',
-    image: twitterImg,
+    name: 'sonic',
+    image: sonicImg,
   },
   {
-    name: 'whatsapp',
-    image: whatsappImg,
+    name: 'streetfigther',
+    image: streetfigtherImg,
   },
   {
-    name: 'youtube',
-    image: youtubeImg,
-  }
+    name: 'sonic',
+    image: sonicImg,
+  },
+  {
+    name: 'metalslug',
+    image: metalSlugImg,
+  },
+  {
+    name: 'metalslug',
+    image: metalSlugImg,
+  },
+  {
+    name: 'contra',
+    image: contraImg,
+  },
+  {
+    name: 'contra',
+    image: contraImg,
+  },
 ];
 
 export default memotestArray;

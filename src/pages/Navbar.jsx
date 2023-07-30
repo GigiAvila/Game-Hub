@@ -49,7 +49,6 @@ const Navbar = () => {
     { id: 8, image: whackAMoleImg },
     { id: 9, image: spaceInvadersImg },
     { id: 10, image: froggerImg },
-    { id: 11, image: connectDotsImg },
   ];
 
   const startIndex = activeIndex - 2 < 0 ? carouselItems.length + (activeIndex - 2) : activeIndex - 2;

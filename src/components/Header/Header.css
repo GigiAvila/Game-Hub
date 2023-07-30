@@ -27,14 +27,29 @@
 
 .header-content >  h1 {
   background: black;
-  font-size: 14vw;
+  font-size: 7rem;
   mix-blend-mode: multiply;
   text-align: center;
   font-weight: 900;
-  height: 35vh;
+  height: 20vh;
   width: 100vw;
   object-fit: cover;
+  padding: 1rem
+
+}
+
+@media screen and (min-width: 1023px) {
+
+  .header-content >  h1 {
+    background: black;
+    font-size: 10rem;
+    mix-blend-mode: multiply;
+    text-align: center;
+    font-weight: 900;
+    height: 25vh;
+    width: 100vw;
+    object-fit: cover;
+    padding: 1rem
   
-
-
+  }
 }

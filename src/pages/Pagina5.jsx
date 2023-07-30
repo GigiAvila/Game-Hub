@@ -70,7 +70,7 @@ const Pagina5 = () => {
     setShowModalMessage(
       hits === selectedWord.length
         ? '¡Felicitaciones! Has encontrado la palabra.'
-        : 'Lo siento, has perdido.'
+        : `Lo siento, has perdido. La palabra era: ${selectedWord}`
     );
     setShowModal(true);
     setGameStarted(false);

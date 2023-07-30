@@ -5,9 +5,8 @@ import Colors from '../components/Simon/Colors';
 import Modal from '../components/Modal/Modal';
 import '../components/Simon/Simon.css';
 
-
 import colorSound from '../components/Simon/assets/color.mp3';
-import correctSecuenceSound from '../components/Simon/assets/correctSecuence.mp3'
+import correctSecuenceSound from '../components/Simon/assets/correctSecuence.mp3';
 import gameOverSound from '../components/Simon/assets/gameOver.mp3';
 
 const Pagina6 = () => {
@@ -21,6 +20,8 @@ const Pagina6 = () => {
     userPlay: false,
     userColors: [],
   });
+
+  const [roundTime, setRoundTime] = useState(1000); // Tiempo inicial entre cada color (1 segundo)
 
   const colorList = ["green", "red", "yellow", "blue"];
 
@@ -48,6 +49,7 @@ const Pagina6 = () => {
   useEffect(() => {
     if (isOn) {
       setPlay({ ...play, isDisplay: true, colors: [] });
+      setRoundTime(1000);
     } else {
       setPlay({
         isDisplay: false,
@@ -86,10 +88,13 @@ const Pagina6 = () => {
     for (let i = 0; i < play.colors.length; i++) {
       setFlashColor(colorsToFlash[i]);
       playSound(colorAudioRef);
-      await wait(1000);
+      await wait(roundTime); // Usamos el tiempo de la ronda actual
       setFlashColor("");
-      await wait(1000);
+      await wait(1000); // Tiempo fijo de 1 segundo entre cada color
     }
+
+    // Reducimos el tiempo de la ronda en 100ms en cada ronda completada
+    setRoundTime((prevRoundTime) => prevRoundTime - 100);
 
     setPlay((prevPlay) => ({
       ...prevPlay,
@@ -130,6 +135,18 @@ const Pagina6 = () => {
       setFlashColor("");
     }
   }
+  function handleResetGame() {
+    setIsOn(false);
+    setPlay({
+      isDisplay: false,
+      colors: [],
+      score: 0,
+      userPlay: false,
+      userColors: [],
+    });
+    setRoundTime(1000);
+    setFlashColor("");
+  }
 
   return (
     <>
@@ -139,6 +156,9 @@ const Pagina6 = () => {
       ) : (
         <div className='simonGameContainer'>
           <h1 className='title'>Simon says</h1>
+          <div className='resetButtonContainer'>
+            <button onClick={handleResetGame}>Volver a jugar</button>
+          </div>
           <div className='Simonboard'>
             {colorList &&
               colorList.map((v, i) => (
@@ -156,7 +176,7 @@ const Pagina6 = () => {
           </div>
           {!isOn && play.score === 0 && (
             <div className='startButtonContainer'>
-              <button onClick={handleStart} className='startButton'>
+              <button onClick={handleStart} className='SimonstartButton'>
                 START
               </button>
             </div>

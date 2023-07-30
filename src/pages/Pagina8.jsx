@@ -38,7 +38,7 @@ const Pagina8 = () => {
   useEffect(() => {
     if (!moleMoving) return;
 
-    const moleInterval = setInterval(moveMoleRandomly, 400);
+    const moleInterval = setInterval(moveMoleRandomly, 500);
 
     return () => clearInterval(moleInterval);
   }, [moleMoving]);
