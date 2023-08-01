@@ -1,0 +1,90 @@
+@import url('https://fonts.cdnfonts.com/css/sf-pixelate');
+
+.sudokuGameContainer
+{
+  display: flex;
+  flex-direction: column;
+  gap: 1vw;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 70vh;
+}
+
+.sudokuTitle {
+  font-size: 3vw;
+  height: 5vh;
+  font-family: 'SF Pixelate', sans-serif;
+  margin: 1vw;
+  color: white;
+}
+
+
+
+.selectLabel {
+  font-family: 'SF Pixelate', sans-serif;
+  color: white;
+}
+
+.selectLabel > select {
+  font-size: 1.2rem;
+  padding: 0.2vw;
+  margin-left: 1vw;
+  border-radius: 5px;
+}
+
+.selectOption {
+  font-size: 1.2rem;
+}
+
+
+.buttonsSudokuContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5vw
+}
+
+.resetSudokuButton{
+  font-family: 'SF Pixelate', sans-serif;
+  font-size: 1rem;
+}
+
+.hintButton {
+  font-family: 'SF Pixelate', sans-serif;
+  font-size: 1rem;
+}
+
+.solveButton {
+  font-family: 'SF Pixelate', sans-serif;
+  font-size: 1rem;
+}
+
+.SudokuBoard > .row > input {
+text-align: center;
+font-size: 20px;
+width: 5vw;
+height: 5vw;
+
+}
+
+.thicker-horizontal-line {
+  border-bottom: 3px solid red; 
+}
+
+.thicker-vertical-line {
+  border-right: 3px solid red; 
+}
+
+
+
+@media screen and (min-width: 1023px) {
+
+  .SudokuBoard > .row > input {
+    width: 3vw;
+    height: 3vw;
+  
+    }
+    
+}
