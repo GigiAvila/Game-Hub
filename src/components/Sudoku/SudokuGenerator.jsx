@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import SudokuBoard from './SudokuBoard';
-import { generateSudokuBoard, solveSudoku } from './SudokuUtils';
+import { generateSudokuBoard, solveSudoku, isValidValue, findEmptyCell } from './SudokuUtils';
 
-const SudokuGenerator = ({ difficulty, onCellChangeBoard, board }) => {
+const SudokuGenerator = ({ difficulty, onCellChangeBoard, board, }) => {
   useEffect(() => {
     const newBoard = generateSudokuBoard(difficulty);
     onCellChangeBoard(newBoard);
@@ -13,6 +13,7 @@ const SudokuGenerator = ({ difficulty, onCellChangeBoard, board }) => {
       <SudokuBoard
         board={board}
         onCellChangeBoard={onCellChangeBoard}
+
       />
     </div>
   );

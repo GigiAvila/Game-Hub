@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../Header/Header';
 import Loading from '../Loading/Loading';
-import SudokuBoard from './SudokuBoard';
 import SudokuGenerator from './SudokuGenerator';
-import { generateSudokuBoard, solveSudoku } from './SudokuUtils';
+import { generateSudokuBoard, solveSudoku, isValidValue, findEmptyCell } from './SudokuUtils';
 
 import './Sudoku.css';
 
@@ -12,7 +11,7 @@ const Pagina2 = () => {
   const [selectedDifficulty, setSelectedDifficulty] = useState('easy');
   const [isBoardGenerated, setIsBoardGenerated] = useState(false);
   const [board, setBoard] = useState([]);
-  const [solution, setSolution] = useState([]);
+  const [originalBoard, setOriginalBoard] = useState([]);
   const [showSolution, setShowSolution] = useState(false);
 
   useEffect(() => {
@@ -20,8 +19,12 @@ const Pagina2 = () => {
       setIsLoading(false);
     }, 1000);
 
-    setBoard(generateSudokuBoard(selectedDifficulty));
-    setIsBoardGenerated(true);
+    const newBoard = generateSudokuBoard(selectedDifficulty);
+    if (Array.isArray(newBoard)) {
+      setBoard(newBoard);
+      setOriginalBoard(JSON.parse(JSON.stringify(newBoard))); // Almacenamos una copia del tablero original
+      setIsBoardGenerated(true);
+    }
 
     return () => clearTimeout(loadingTimer);
   }, [selectedDifficulty]);
@@ -29,21 +32,28 @@ const Pagina2 = () => {
   const handleDifficultyChange = (event) => {
     const newDifficulty = event.target.value;
     setSelectedDifficulty(newDifficulty);
+    setShowSolution(false);
   };
 
   const handleCellChangeBoard = (newBoard) => {
+    console.log('New board:', newBoard);
     setBoard(newBoard);
   };
 
   const handleShowSolution = () => {
-    const solvedBoard = solveSudoku(board);
-    setSolution(solvedBoard);
-    setShowSolution(true);
+    if (isBoardGenerated) {
+      // Usamos la copia del tablero original para mostrar la solución sin sobrescribir los cambios del usuario
+      const solvedBoard = JSON.parse(JSON.stringify(originalBoard)); // Hacemos una copia del tablero original
+      solveSudoku(solvedBoard); // Resolvemos el Sudoku en la copia del tablero original
+      setBoard(solvedBoard); // Actualizamos el tablero con la solución
+      setShowSolution(true); // Mostramos la solución en el SudokuGenerator si lo deseas
+    }
   };
 
   const handleResetSudoku = () => {
     const newBoard = generateSudokuBoard(selectedDifficulty);
     setBoard(newBoard);
+    setOriginalBoard(JSON.parse(JSON.stringify(newBoard))); // Actualizamos la copia del tablero original
     setShowSolution(false);
   };
 
@@ -73,16 +83,26 @@ const Pagina2 = () => {
               </label>
             </div>
             {isBoardGenerated && (
-              <SudokuGenerator
-                board={board}
-                difficulty={selectedDifficulty}
-                onCellChangeBoard={handleCellChangeBoard}
-              />
+              <>
+                <SudokuGenerator
+                  board={board}
+                  difficulty={selectedDifficulty}
+                  onCellChangeBoard={handleCellChangeBoard}
+                />
+                <div>
+                  <button className='hintButton'>
+                    Pista!
+                  </button>
+                </div>
+              </>
             )}
             <div className='buttonsSudokuContainer'>
-              <button className='hintButton' > Pista!</button>
-              <button className='solveButton' onClick={handleShowSolution}> Ver solución</button>
-              <button className='resetSudokuButton' onClick={handleResetSudoku}>Nuevo tablero</button>
+              <button className='solveButton' onClick={handleShowSolution}>
+                Ver solución
+              </button>
+              <button className='resetSudokuButton' onClick={handleResetSudoku}>
+                Nuevo tablero
+              </button>
             </div>
           </div>
         </>

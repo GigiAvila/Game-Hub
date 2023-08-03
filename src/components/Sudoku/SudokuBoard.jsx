@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Cell from './Cell';
 import { findEmptyCell } from './SudokuUtils';
 
-const SudokuBoard = ({ board, onCellChangeBoard }) => {
+const SudokuBoard = ({ board, onCellChangeBoard, }) => {
+  console.log('SudokuBoard rendered');
 
-  const handleCellChangeBoard = (row, col, value) => {
+  const handleCellChangeBoard = (row, col, value, isHint = false) => {
     const numValue = parseInt(value, 10);
-    console.log(numValue)
     if (!isNaN(numValue) && numValue >= 1 && numValue <= 9) {
       const updatedBoard = [...board];
       updatedBoard[row][col].value = numValue;
+      if (isHint) {
+        updatedBoard[row][col].isFixed = true;
+      }
       onCellChangeBoard(updatedBoard);
     } else {
       const updatedBoard = [...board];
@@ -17,7 +20,6 @@ const SudokuBoard = ({ board, onCellChangeBoard }) => {
       onCellChangeBoard(updatedBoard);
     }
   };
-
 
   return (
     <div className="SudokuBoard">
