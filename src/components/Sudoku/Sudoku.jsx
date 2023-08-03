@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Header from '../Header/Header';
 import Loading from '../Loading/Loading';
 import SudokuBoard from './SudokuBoard';
-import SudokuGenerator from './SudokuGenerator'; // Import isValidValue from SudokuGenerator
-import { generateSudokuBoard, isValidValue } from './SudokuUtils';
+import SudokuGenerator from './SudokuGenerator';
+import { generateSudokuBoard, solveSudoku } from './SudokuUtils';
 
 import './Sudoku.css';
 
@@ -12,7 +12,8 @@ const Pagina2 = () => {
   const [selectedDifficulty, setSelectedDifficulty] = useState('easy');
   const [isBoardGenerated, setIsBoardGenerated] = useState(false);
   const [board, setBoard] = useState([]);
-  const [hintedNumbers, setHintedNumbers] = useState([]);
+  const [solution, setSolution] = useState([]);
+  const [showSolution, setShowSolution] = useState(false);
 
   useEffect(() => {
     const loadingTimer = setTimeout(() => {
@@ -32,10 +33,19 @@ const Pagina2 = () => {
 
   const handleCellChangeBoard = (newBoard) => {
     setBoard(newBoard);
-    // Clear hinted numbers when cell values change
-    setHintedNumbers([]);
   };
 
+  const handleShowSolution = () => {
+    const solvedBoard = solveSudoku(board);
+    setSolution(solvedBoard);
+    setShowSolution(true);
+  };
+
+  const handleResetSudoku = () => {
+    const newBoard = generateSudokuBoard(selectedDifficulty);
+    setBoard(newBoard);
+    setShowSolution(false);
+  };
 
   return (
     <>
@@ -64,15 +74,15 @@ const Pagina2 = () => {
             </div>
             {isBoardGenerated && (
               <SudokuGenerator
+                board={board}
                 difficulty={selectedDifficulty}
                 onCellChangeBoard={handleCellChangeBoard}
               />
             )}
             <div className='buttonsSudokuContainer'>
               <button className='hintButton' > Pista!</button>
-              <button className='solveButton' > Ver solución</button>
-              <button className='resetSudokuButton'>Volver a jugar</button>
-
+              <button className='solveButton' onClick={handleShowSolution}> Ver solución</button>
+              <button className='resetSudokuButton' onClick={handleResetSudoku}>Nuevo tablero</button>
             </div>
           </div>
         </>

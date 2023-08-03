@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Cell from './Cell';
-import { solveSudoku, isValidValue, findEmptyCell } from './SudokuUtils';
+import { findEmptyCell } from './SudokuUtils';
 
-const SudokuBoard = ({ board, onCellChangeBoard, showHint }) => {
+const SudokuBoard = ({ board, onCellChangeBoard }) => {
 
   const handleCellChangeBoard = (row, col, value) => {
     const numValue = parseInt(value, 10);
@@ -10,24 +10,14 @@ const SudokuBoard = ({ board, onCellChangeBoard, showHint }) => {
     if (!isNaN(numValue) && numValue >= 1 && numValue <= 9) {
       const updatedBoard = [...board];
       updatedBoard[row][col].value = numValue;
-      onCellChangeBoard(row, col, numValue);
-
-
-
+      onCellChangeBoard(updatedBoard);
     } else {
-
       const updatedBoard = [...board];
       updatedBoard[row][col].value = '';
-      onCellChangeBoard(row, col, 0);
+      onCellChangeBoard(updatedBoard);
     }
   };
 
-
-
-  const isSudokuSolved = (board) => {
-    // Optional: Check if the Sudoku board is solved using the solveSudoku function from sudokuUtils
-    // Return true if solved, false otherwise
-  };
 
   return (
     <div className="SudokuBoard">

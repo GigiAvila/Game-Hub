@@ -69,6 +69,7 @@ export const solveSudoku = (board) => {
   return false;
 };
 
+
 // Función para encontrar la próxima celda vacía en el tablero
 export const findEmptyCell = (board) => {
   for (let row = 0; row < 9; row++) {
@@ -91,7 +92,6 @@ export const generateSudokuBoard = (difficulty) => {
   // Implement the Sudoku generation algorithm using backtracking to fill the board
   solveSudoku(board);
 
-  // Hide numbers based on the selected difficulty
   hideNumbers(board, difficulty);
 
   return board;
@@ -134,6 +134,6 @@ export const hideNumbers = (board, difficulty) => {
   for (let i = 0; i < cellsToHide; i++) {
     const [row, col] = cellPositions[i];
     board[row][col].value = 0;
-    board[row][col].isFixed = true; // Mark the cell as fixed (can't be changed by the user)
+    board[row][col].isFixed = true;
   }
 };
