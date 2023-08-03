@@ -22,7 +22,7 @@ const Pagina2 = () => {
     const newBoard = generateSudokuBoard(selectedDifficulty);
     if (Array.isArray(newBoard)) {
       setBoard(newBoard);
-      setOriginalBoard(JSON.parse(JSON.stringify(newBoard))); // Almacenamos una copia del tablero original
+      setOriginalBoard(JSON.parse(JSON.stringify(newBoard)));
       setIsBoardGenerated(true);
     }
 
@@ -42,18 +42,18 @@ const Pagina2 = () => {
 
   const handleShowSolution = () => {
     if (isBoardGenerated) {
-      // Usamos la copia del tablero original para mostrar la solución sin sobrescribir los cambios del usuario
-      const solvedBoard = JSON.parse(JSON.stringify(originalBoard)); // Hacemos una copia del tablero original
-      solveSudoku(solvedBoard); // Resolvemos el Sudoku en la copia del tablero original
-      setBoard(solvedBoard); // Actualizamos el tablero con la solución
-      setShowSolution(true); // Mostramos la solución en el SudokuGenerator si lo deseas
+
+      const solvedBoard = JSON.parse(JSON.stringify(originalBoard));
+      solveSudoku(solvedBoard);
+      setBoard(solvedBoard);
+      setShowSolution(true);
     }
   };
 
   const handleResetSudoku = () => {
     const newBoard = generateSudokuBoard(selectedDifficulty);
     setBoard(newBoard);
-    setOriginalBoard(JSON.parse(JSON.stringify(newBoard))); // Actualizamos la copia del tablero original
+    setOriginalBoard(JSON.parse(JSON.stringify(newBoard)));
     setShowSolution(false);
   };
 
