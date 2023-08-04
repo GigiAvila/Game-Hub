@@ -1,4 +1,4 @@
-// Función para crear un tablero de Sudoku vacío
+/// Función para crear un tablero de Sudoku vacío
 export const createEmptyBoard = () => {
   const board = [];
   for (let row = 0; row < 9; row++) {
@@ -52,7 +52,9 @@ export const solveSudoku = (board) => {
   }
 
   const [row, col] = emptyCell;
-  for (let num = 1; num <= 9; num++) {
+  const nums = shuffleArray([1, 2, 3, 4, 5, 6, 7, 8, 9]); // Shuffle the numbers
+
+  for (const num of nums) {
     if (isValidValue(board, row, col, num)) {
       board[row][col].value = num;
 
@@ -69,7 +71,6 @@ export const solveSudoku = (board) => {
   return false;
 };
 
-
 // Función para encontrar la próxima celda vacía en el tablero
 export const findEmptyCell = (board) => {
   for (let row = 0; row < 9; row++) {
@@ -84,17 +85,16 @@ export const findEmptyCell = (board) => {
   return null;
 };
 
-// Función para generar un tablero de Sudoku válido y único y ocultar algunos números
-export const generateSudokuBoard = (difficulty) => {
-  const board = createEmptyBoard();
-
-  // Implement the Sudoku generation algorithm using backtracking to fill the board
-  solveSudoku(board);
-
-  hideNumbers(board, difficulty);
-
-  return board;
+// Utility function to shuffle an array using the Fisher-Yates algorithm
+export const shuffleArray = (array) => {
+  const shuffledArray = [...array];
+  for (let i = shuffledArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+  }
+  return shuffledArray;
 };
+
 
 // Función para ocultar algunos números en el tablero basándose en la dificultad
 export const hideNumbers = (board, difficulty) => {
@@ -108,7 +108,7 @@ export const hideNumbers = (board, difficulty) => {
       cellsToHide = 50;
       break;
     case 'hard':
-      cellsToHide = 60;
+      cellsToHide = 55;
       break;
     default:
       cellsToHide = 40;
@@ -135,4 +135,17 @@ export const hideNumbers = (board, difficulty) => {
     board[row][col].value = 0;
     board[row][col].isFixed = true;
   }
+};
+
+
+// Función para generar un tablero de Sudoku válido y único y ocultar algunos números
+export const generateSudokuBoard = (difficulty) => {
+  const board = createEmptyBoard();
+
+  // Implement the Sudoku generation algorithm using backtracking to fill the board
+  solveSudoku(board);
+
+  hideNumbers(board, difficulty);
+
+  return board;
 };

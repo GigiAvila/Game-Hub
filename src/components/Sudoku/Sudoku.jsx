@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from '../Header/Header';
 import Loading from '../Loading/Loading';
 import SudokuGenerator from './SudokuGenerator';
-import { generateSudokuBoard, solveSudoku, isValidValue, findEmptyCell } from './SudokuUtils';
+import { generateSudokuBoard, solveSudoku } from './SudokuUtils';
 
 import './Sudoku.css';
 
@@ -13,7 +13,8 @@ const Pagina2 = () => {
   const [board, setBoard] = useState([]);
   const [originalBoard, setOriginalBoard] = useState([]);
   const [showSolution, setShowSolution] = useState(false);
-  const [hintIndex, setHintIndex] = useState(0); // Step 1: Create a state variable for hint index
+  const [hintIndex, setHintIndex] = useState(0);
+  const [solvedBoard, setSolvedBoard] = useState([]);
 
   useEffect(() => {
     const loadingTimer = setTimeout(() => {
@@ -22,9 +23,13 @@ const Pagina2 = () => {
 
     const newBoard = generateSudokuBoard(selectedDifficulty);
     if (Array.isArray(newBoard)) {
-      setBoard(newBoard);
-      setOriginalBoard(JSON.parse(JSON.stringify(newBoard)));
+      setOriginalBoard(newBoard);
+      setBoard(JSON.parse(JSON.stringify(newBoard)));
       setIsBoardGenerated(true);
+
+      const solvedCopy = JSON.parse(JSON.stringify(newBoard));
+      solveSudoku(solvedCopy);
+      setSolvedBoard(solvedCopy);
     }
 
     return () => clearTimeout(loadingTimer);
@@ -42,45 +47,45 @@ const Pagina2 = () => {
 
   const handleShowSolution = () => {
     if (isBoardGenerated) {
-      const solvedBoard = JSON.parse(JSON.stringify(originalBoard));
-      solveSudoku(solvedBoard);
-      setBoard(solvedBoard);
+      const solvedCopy = JSON.parse(JSON.stringify(solvedBoard));
+      setBoard(solvedCopy);
       setShowSolution(true);
     }
   };
 
   const handleResetSudoku = () => {
     const newBoard = generateSudokuBoard(selectedDifficulty);
-    setBoard(newBoard);
-    setOriginalBoard(JSON.parse(JSON.stringify(newBoard)));
+    setOriginalBoard(newBoard);
+    setBoard(JSON.parse(JSON.stringify(newBoard)));
     setShowSolution(false);
-  };
 
+    const solvedCopy = JSON.parse(JSON.stringify(newBoard));
+    solveSudoku(solvedCopy);
+    setSolvedBoard(solvedCopy);
+  };
 
   const handleHintClick = () => {
     if (isBoardGenerated) {
-
       const emptyCells = [];
-      for (let row = 0; row < 9; row++) {
-        for (let col = 0; col < 9; col++) {
-          if (board[row][col].value === 0) {
-            emptyCells.push([row, col]);
+      for (let row = 0; row < originalBoard.length; row++) {
+        for (let col = 0; col < originalBoard[row].length; col++) {
+          if (originalBoard[row][col].value === 0) {
+            emptyCells.push({ row, col });
           }
         }
       }
 
       if (emptyCells.length > 0) {
         const randomIndex = Math.floor(Math.random() * emptyCells.length);
-        const [row, col] = emptyCells[randomIndex];
-        const correctValue = originalBoard[row][col].value;
+        const { row, col } = emptyCells[randomIndex];
+
         const updatedBoard = JSON.parse(JSON.stringify(board));
-        updatedBoard[row][col].value = correctValue;
+        updatedBoard[row][col].value = solvedBoard[row][col].value;
+
         setBoard(updatedBoard);
       }
     }
   };
-
-
 
   return (
     <>
@@ -115,7 +120,6 @@ const Pagina2 = () => {
                   onCellChangeBoard={handleCellChangeBoard}
                 />
                 <div>
-                  {/* Step 3: Add event handler to the hintButton */}
                   <button className='hintButton' onClick={handleHintClick}>
                     Pista!
                   </button>

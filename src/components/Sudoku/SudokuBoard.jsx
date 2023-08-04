@@ -2,7 +2,7 @@ import React from 'react';
 import Cell from './Cell';
 import { findEmptyCell } from './SudokuUtils';
 
-const SudokuBoard = ({ board, onCellChangeBoard, }) => {
+const SudokuBoard = ({ board, onCellChangeBoard }) => {
   console.log('SudokuBoard rendered');
 
   const handleCellChangeBoard = (row, col, value, isHint = false) => {
