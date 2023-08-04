@@ -84,7 +84,6 @@ export const findEmptyCell = (board) => {
   return null;
 };
 
-
 // Función para generar un tablero de Sudoku válido y único y ocultar algunos números
 export const generateSudokuBoard = (difficulty) => {
   const board = createEmptyBoard();
