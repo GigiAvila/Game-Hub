@@ -1,0 +1,64 @@
+@import url('https://fonts.cdnfonts.com/css/sf-pixelate');
+
+.spaceInvadersContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 80vh;
+}
+
+.titleSpaceInvanders {
+  font-size: 6vw;
+  font-family: 'SF Pixelate', sans-serif;
+  color: white
+}
+
+.spaceCanvas {
+  background-image: url(./assets/spaceBackground.png);
+  width: 80vw;
+  height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.enemyGrid {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 3vw;
+  width: 50vw
+}
+
+.enemyRow{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.enemyImg {
+  width: 5vw;
+  height: 5vw
+}
+
+
+@media screen and (min-width: 1023px) {
+
+  .titleSpaceInvanders {
+    font-size: 3vw;
+  }
+
+
+  .enemyImg {
+    width: 5vw;
+    height: 5vw
+  }
+  
+  
+}

@@ -3,7 +3,7 @@ import Header from '../Header/Header';
 import Loading from '../Loading/Loading';
 import SudokuGenerator from './SudokuGenerator';
 import { generateSudokuBoard, solveSudoku } from './SudokuUtils';
-
+import Modal from '../Modal/Modal';
 import './Sudoku.css';
 
 const Pagina2 = () => {
@@ -15,6 +15,8 @@ const Pagina2 = () => {
   const [showSolution, setShowSolution] = useState(false);
   const [hintIndex, setHintIndex] = useState(0);
   const [solvedBoard, setSolvedBoard] = useState([]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [GameCompleted, setGameCompleted] = useState(false);
 
   useEffect(() => {
     const loadingTimer = setTimeout(() => {
@@ -43,6 +45,17 @@ const Pagina2 = () => {
 
   const handleCellChangeBoard = (newBoard) => {
     setBoard(newBoard);
+    checkGameCompleted();
+  };
+
+  const checkGameCompleted = () => {
+    if (!GameCompleted) {
+      const isComplete = JSON.stringify(board) === JSON.stringify(solvedBoard);
+      if (isComplete) {
+        setGameCompleted(true);
+        showModal();
+      }
+    }
   };
 
   const handleShowSolution = () => {
@@ -62,6 +75,7 @@ const Pagina2 = () => {
     const solvedCopy = JSON.parse(JSON.stringify(newBoard));
     solveSudoku(solvedCopy);
     setSolvedBoard(solvedCopy);
+
   };
 
   const handleHintClick = () => {
@@ -85,6 +99,10 @@ const Pagina2 = () => {
         setBoard(updatedBoard);
       }
     }
+  };
+
+  const showModal = () => {
+    setIsModalVisible(true);
   };
 
   return (
@@ -119,14 +137,12 @@ const Pagina2 = () => {
                   difficulty={selectedDifficulty}
                   onCellChangeBoard={handleCellChangeBoard}
                 />
-                <div>
-                  <button className='hintButton' onClick={handleHintClick}>
-                    Pista!
-                  </button>
-                </div>
               </>
             )}
             <div className='buttonsSudokuContainer'>
+              <button className='hintButton' onClick={handleHintClick}>
+                Pista!
+              </button>
               <button className='solveButton' onClick={handleShowSolution}>
                 Ver solución
               </button>
@@ -135,6 +151,12 @@ const Pagina2 = () => {
               </button>
             </div>
           </div>
+          {isModalVisible && (
+            <Modal
+              message='¡Felicidades! ¡Has completado el juego!'
+              onClose={() => setIsModalVisible(false)}
+            />
+          )}
         </>
       )}
     </>

@@ -12,7 +12,7 @@
 }
 
 .sudokuTitle {
-  font-size: 3vw;
+  font-size: 6vw;
   height: 5vh;
   font-family: 'SF Pixelate', sans-serif;
   margin: 1vw;
@@ -24,17 +24,18 @@
 .selectLabel {
   font-family: 'SF Pixelate', sans-serif;
   color: white;
+  font-size: 3vw;
 }
 
 .selectLabel > select {
-  font-size: 1.2rem;
+  font-size: 2.8vw;
   padding: 0.2vw;
   margin-left: 1vw;
   border-radius: 5px;
 }
 
 .selectOption {
-  font-size: 1.2rem;
+  font-size: 2.8vw;
 }
 
 
@@ -43,48 +44,99 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 0.5vw
+  gap: 0.5vw;
 }
 
 .resetSudokuButton{
   font-family: 'SF Pixelate', sans-serif;
-  font-size: 1rem;
+  font-size: 2.2vw;
+  width: 18vw;
+  height: 4vh;
 }
 
 .hintButton {
   font-family: 'SF Pixelate', sans-serif;
-  font-size: 1rem;
+  font-size: 2.2vw;
+  width: 18vw;
+  height: 4vh;
 }
 
 .solveButton {
   font-family: 'SF Pixelate', sans-serif;
-  font-size: 1rem;
+  font-size: 2.2vw;
+  width: 18vw;
+  height: 4vh;
+}
+
+.SudokuBoard {
+  margin-top: 3vw;
+  border: 2px solid #0027a9;
 }
 
 .SudokuBoard > .row > input {
 text-align: center;
 font-size: 20px;
-width: 5vw;
-height: 5vw;
+width: 6vw;
+height: 6vw;
 
 }
 
 .thicker-horizontal-line {
-  border-bottom: 3px solid red; 
+  border-bottom: 3px solid #0027a9; 
 }
 
 .thicker-vertical-line {
-  border-right: 3px solid red; 
+  border-right: 3px solid #0027a9; 
 }
 
 
 
 @media screen and (min-width: 1023px) {
 
+  .sudokuTitle {
+    font-size: 3vw;
+  }
+
+  .selectLabel {
+    font-size: 1.2vw;
+  }
+
+  .selectLabel > select {
+    font-size: 1vw;
+  }
+  .selectOption {
+    font-size: 1vw;
+  }
+  
+  .SudokuBoard{
+    margin-top: 0vw;
+  }
+
   .SudokuBoard > .row > input {
     width: 3vw;
     height: 3vw;
-  
     }
+
     
+.resetSudokuButton{
+  font-family: 'SF Pixelate', sans-serif;
+  font-size: 0.8rem;
+  width: 8vw;
+  height: 6vh;
+}
+
+.hintButton {
+  font-family: 'SF Pixelate', sans-serif;
+  font-size: 0.8rem;
+  width: 8vw;
+  height: 6vh;
+}
+
+.solveButton {
+  font-family: 'SF Pixelate', sans-serif;
+  font-size: 0.8rem;
+  width: 8vw;
+  height: 6vh;
+}
+  
 }

@@ -1,15 +1,11 @@
 import React from 'react'
-import Header from '../components/Header/Header'
-import Loading from '../components/Loading/Loading'
+import SpaceInvaders from '../components/SpaceInvaders/SpaceInvaders'
 
-const Pagina10 = () => {
+const Pagina9 = () => {
   return (
-    <>
-      <Header />
-      <Loading />
-      <div>Pagina9</div></>
+    <SpaceInvaders />
 
   )
 }
 
-export default Pagina10
+export default Pagina9
