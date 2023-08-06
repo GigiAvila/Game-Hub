@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Enemy from './Enemy';
 
+
 const enemyList = [
   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -18,6 +19,7 @@ const MAX_VERTICAL_DISTANCE = 150;
 const EnemyController = () => {
 
   const [enemyPositions, setEnemyPositions] = useState([]);
+
 
   useEffect(() => {
     createEnemies();

@@ -11,7 +11,7 @@ const BulletController = ({ playerPosition }) => {
   const PLAYER_WIDTH = 84;
   const BULLET_SPEED = 10;
   const MAX_BULLETS = 20;
-  const MAX_BULLET_INTERVAL = 10000;
+  const MAX_BULLET_INTERVAL = 20000;
 
   const shootAudioRef = useRef();
   const noBulletAudioRef = useRef();

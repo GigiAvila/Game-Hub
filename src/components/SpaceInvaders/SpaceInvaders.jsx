@@ -13,6 +13,8 @@ const SpaceInvaders = () => {
   const [isLoading, setIsLoading] = useState(true);
 
 
+
+
   useEffect(() => {
     const loadingTimer = setTimeout(() => {
       setIsLoading(false);
