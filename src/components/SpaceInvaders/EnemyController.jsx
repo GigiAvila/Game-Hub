@@ -11,15 +11,17 @@ const enemyList = [
 ];
 
 const ENEMY_WIDTH = 50;
-const ENEMY_HEIGHT = 50;
+const ENEMY_HEIGHT = 20;
 const MAX_HORIZONTAL_DISTANCE = 50;
+const MAX_VERTICAL_DISTANCE = 150;
 
 const EnemyController = () => {
-  const [enemyRows, setEnemyRows] = useState([]);
+
+  const [enemyPositions, setEnemyPositions] = useState([]);
 
   useEffect(() => {
     createEnemies();
-    const moveInterval = setInterval(moveEnemies, 100);
+    const moveInterval = setInterval(moveEnemies, 50);
 
     return () => {
       clearInterval(moveInterval);
@@ -27,55 +29,72 @@ const EnemyController = () => {
   }, []);
 
   const createEnemies = () => {
-    const newEnemyRows = enemyList.map((row, rowIndex) => {
-      return row.map((enemyNumber, enemyIndex) => {
-        return (
-          <Enemy
-            key={`${rowIndex}-${enemyIndex}`}
-            enemyNumber={enemyNumber}
-            positionX={enemyIndex * ENEMY_WIDTH * 0.5} // reduzco gap entre enemies
-            positionY={rowIndex * ENEMY_HEIGHT * 0.5}
-          />
-        );
-      });
+    const newEnemyPositions = enemyList.flatMap((row, rowIndex) => {
+      return row.map((enemyNumber, enemyIndex) => ({
+        x: enemyIndex * ENEMY_WIDTH * 0.5, // gap entre enemies
+        y: rowIndex * ENEMY_HEIGHT,
+      }));
     });
 
-    setEnemyRows(newEnemyRows);
+    setEnemyPositions(newEnemyPositions);
   };
 
   const moveEnemies = () => {
-    setEnemyRows((prevEnemyRows) => {
-      const newEnemyRows = prevEnemyRows.map((row, rowIndex) => {
-        return row.map((enemy) => {
-          const newX = enemy.props.positionX + 1; // velocidad
-          const newY = enemy.props.positionY;
 
-          return React.cloneElement(enemy, { positionX: newX, positionY: newY });
-        });
-      });
+    setEnemyPositions((prevPositions) => {
+      const newPositions = prevPositions.map((position) => ({
+        x: position.x,
+        y: position.y,
+        direction: position.direction,
+      }))
 
-      if (newEnemyRows[0][0].props.positionX >= MAX_HORIZONTAL_DISTANCE) {
+      if (prevPositions[0].direction === 1) {
+        if (prevPositions[0].x >= MAX_HORIZONTAL_DISTANCE) {
+          return prevPositions.map((position) => ({
+            x: position.x - 1,
+            y: position.y + ENEMY_HEIGHT,
+            direction: -1
+          }));
+        } else {
+          return newPositions.map((position) => ({
+            x: position.x + 1,
+            y: position.y,
+            direction: 1,
+          }));
+        }
+      } else {
+        if (prevPositions[0].x == 0) {
+          return prevPositions.map((position) => ({
+            x: position.x + 1,
+            y: position.y + ENEMY_HEIGHT,
+            direction: 1
+          }));
+        } else {
 
-        return newEnemyRows.map((row, rowIndex) => {
-          return row.map((enemy) => {
-            const newX = enemy.props.positionX - MAX_HORIZONTAL_DISTANCE;
-            const newY = enemy.props.positionY + ENEMY_HEIGHT;
+          return newPositions.map((position) => ({
+            x: position.x - 1,
+            y: position.y,
+            direction: -1,
+          }));
+        }
 
-            return React.cloneElement(enemy, { positionX: newX, positionY: newY });
-          });
-        });
+
+
       }
-
-      return newEnemyRows;
-    });
+    })
   };
 
+
+
   return (
-    <div style={{ position: 'relative', width: '100%', height: '100vh' }}>
-      {enemyRows.map((row, index) => (
-        <div className="enemyRow" key={index} style={{ display: 'flex' }}>
-          {row}
-        </div>
+    <div style={{ position: 'relative', width: '100%', height: '60vh' }}>
+      {enemyPositions.map((position, index) => (
+        <Enemy
+          key={index}
+          enemyNumber={enemyList[Math.floor(index / 10)][index % 10]}
+          positionX={position.x}
+          positionY={position.y}
+        />
       ))}
     </div>
   );

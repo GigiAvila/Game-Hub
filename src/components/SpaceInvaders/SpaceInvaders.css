@@ -22,6 +22,7 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  overflow: hidden;
 }
 
 .enemyGrid {
@@ -48,6 +49,15 @@
   height: 5vw
 }
 
+.playerContainer {
+  width: 25vw;
+  height: 25VW;
+}
+
+.playerImg {
+  width: 100%;
+  height: 100%;
+}
 
 @media screen and (min-width: 1023px) {
 
