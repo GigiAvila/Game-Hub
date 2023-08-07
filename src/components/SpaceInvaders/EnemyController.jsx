@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Enemy from './Enemy';
+import BulletController from './BulletController';
 
 
 const enemyList = [
@@ -49,6 +50,7 @@ const EnemyController = () => {
         y: position.y,
         direction: position.direction,
       }))
+      console.log('enemyPositions', newPositions)
 
       if (prevPositions[0].direction === 1) {
         if (prevPositions[0].x >= MAX_HORIZONTAL_DISTANCE) {
@@ -98,6 +100,9 @@ const EnemyController = () => {
           positionY={position.y}
         />
       ))}
+      <BulletController
+        enemyPositions={enemyPositions}
+        setEnemyPositions={setEnemyPositions} />
     </div>
   );
 };

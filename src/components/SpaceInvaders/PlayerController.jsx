@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Player from './Player';
 import BulletController from './BulletController';
 
+
 export const PlayerController = () => {
   const [playerPosition, setPlayerPosition] = useState({ x: 120, y: 600 });
   const PLAYER_WIDTH = 50;
@@ -39,6 +40,7 @@ export const PlayerController = () => {
   return <>
     <Player positionX={playerPosition.x} positionY={playerPosition.y} />;
     <BulletController playerPosition={playerPosition} />
+
   </>
 };
 
