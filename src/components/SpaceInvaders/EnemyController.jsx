@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Enemy from './Enemy';
 import BulletController from './BulletController';
+import Modal from '../Modal/Modal';
+
 
 
 const enemyList = [
@@ -15,16 +17,47 @@ const enemyList = [
 const ENEMY_WIDTH = 50;
 const ENEMY_HEIGHT = 20;
 const MAX_HORIZONTAL_DISTANCE = 50;
-const MAX_VERTICAL_DISTANCE = 150;
+
+
 
 const EnemyController = () => {
+  const initialEnemyPositions = enemyList.flatMap((row, rowIndex) => {
+    return row.map((enemyNumber, enemyIndex) => ({
+      x: enemyIndex * ENEMY_WIDTH * 0.5,
+      y: rowIndex * ENEMY_HEIGHT,
+    }));
+  });
+  const [isGameActive, setIsGameActive] = useState(true);
+  const [enemyPositions, setEnemyPositions] = useState(initialEnemyPositions);
+  const [looseLife, setLooseLife] = useState();
+  const [modalVisible, setModalVisible] = useState(false);
 
-  const [enemyPositions, setEnemyPositions] = useState([]);
+
+  const startGame = () => {
+    setIsGameActive(true);
+    createEnemies();
+    setEnemyPositions(initialEnemyPositions)
+    setModalVisible(false);
+  };
+
+  const resetGame = () => {
+    setIsGameActive(true);
+    setEnemyPositions(initialEnemyPositions)
+    setModalVisible(false);
+    console.log('reset')
+  };
+
+
+  const endGame = () => {
+    setIsGameActive(false);
+    setModalVisible(true);
+  };
+
 
 
   useEffect(() => {
-    createEnemies();
-    const moveInterval = setInterval(moveEnemies, 50);
+    startGame();
+    const moveInterval = setInterval(moveEnemies, 10);
 
     return () => {
       clearInterval(moveInterval);
@@ -34,7 +67,7 @@ const EnemyController = () => {
   const createEnemies = () => {
     const newEnemyPositions = enemyList.flatMap((row, rowIndex) => {
       return row.map((enemyNumber, enemyIndex) => ({
-        x: enemyIndex * ENEMY_WIDTH * 0.5, // gap entre enemies
+        x: enemyIndex * ENEMY_WIDTH * 0.5,
         y: rowIndex * ENEMY_HEIGHT,
       }));
     });
@@ -43,21 +76,29 @@ const EnemyController = () => {
   };
 
   const moveEnemies = () => {
+    if (!isGameActive) {
+      return;
+    }
 
     setEnemyPositions((prevPositions) => {
       const newPositions = prevPositions.map((position) => ({
         x: position.x,
         y: position.y,
         direction: position.direction,
-      }))
-      console.log('enemyPositions', newPositions)
+      }));
+
+      const enemyReachedBottom = newPositions.some((position) => position.y >= 410);
+
+      if (enemyReachedBottom) {
+        endGame();
+      }
 
       if (prevPositions[0].direction === 1) {
         if (prevPositions[0].x >= MAX_HORIZONTAL_DISTANCE) {
           return prevPositions.map((position) => ({
             x: position.x - 1,
             y: position.y + ENEMY_HEIGHT,
-            direction: -1
+            direction: -1,
           }));
         } else {
           return newPositions.map((position) => ({
@@ -67,28 +108,22 @@ const EnemyController = () => {
           }));
         }
       } else {
-        if (prevPositions[0].x == 0) {
+        if (prevPositions[0].x === 0) {
           return prevPositions.map((position) => ({
             x: position.x + 1,
             y: position.y + ENEMY_HEIGHT,
-            direction: 1
+            direction: 1,
           }));
         } else {
-
           return newPositions.map((position) => ({
             x: position.x - 1,
             y: position.y,
             direction: -1,
           }));
         }
-
-
-
       }
-    })
+    });
   };
-
-
 
   return (
     <div style={{ position: 'relative', width: '100%', height: '60vh' }}>
@@ -102,7 +137,14 @@ const EnemyController = () => {
       ))}
       <BulletController
         enemyPositions={enemyPositions}
-        setEnemyPositions={setEnemyPositions} />
+        setEnemy
+        setEnemyPositions={setEnemyPositions}
+      />
+      {!isGameActive && (
+        <Modal
+          message="☠️☠️☠️¡Lo siento! Haz perdido "
+        />
+      )}
     </div>
   );
 };

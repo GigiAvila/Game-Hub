@@ -9,11 +9,8 @@ import './SpaceInvaders.css'
 
 
 
-const SpaceInvaders = () => {
+const SpaceInvaders = ({ fatherResetGame }) => {
   const [isLoading, setIsLoading] = useState(true);
-
-
-
 
   useEffect(() => {
     const loadingTimer = setTimeout(() => {
@@ -33,6 +30,9 @@ const SpaceInvaders = () => {
         <div className='spaceInvadersContainer'>
           <h1 className='titleSpaceInvanders'>Space Invaders</h1>
           <SpaceCanvas />
+          <button className='resetSpaceInvadersButton' disabled >
+            Volver a jugar
+          </button>
         </div>
       )}
     </>

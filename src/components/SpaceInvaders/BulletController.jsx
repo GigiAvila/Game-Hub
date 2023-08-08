@@ -6,11 +6,15 @@ import noBulletSound from './assets/noBullets.mp3';
 
 const BulletController = ({ playerPosition, enemyPositions, setEnemyPositions }) => {
   const [playerBullets, setPlayerBullets] = useState([]);
-  const [bulletCount, setBulletCount] = useState(0);
+  const [playerBulletCount, setplayerBulletCount] = useState(0);
+  const [enemyBullets, setEnemyBullets] = useState([]);
 
   // console.log('recibiendo enemyPositions...', enemyPositions)
   const ENEMY_WIDTH = 50;
   const ENEMY_HEIGHT = 20;
+  const ENEMY_SHOOT_INTERVAL = 3000; // Intervalo de tiempo para disparar (3 segundos)
+  const BULLET_SPEED_ENEMY = 15; // Velocidad de la bala enemiga
+
   const PLAYER_WIDTH = 84;
   const BULLET_SPEED = 10;
   const MAX_BULLETS = 20;
@@ -19,22 +23,42 @@ const BulletController = ({ playerPosition, enemyPositions, setEnemyPositions })
   const shootAudioRef = useRef();
   const noBulletAudioRef = useRef();
 
+
+  // PLAYER BULLETS LOGIC 
   const playerShootBullet = () => {
-    if (bulletCount < MAX_BULLETS && playerPosition) {
-      const newBullet = {
+    if (playerBulletCount < MAX_BULLETS && playerPosition) {
+      const newPlayerBullet = {
         x: playerPosition.x + PLAYER_WIDTH / 2,
         y: playerPosition.y,
       };
       shootAudioRef.current.currentTime = 0;
       shootAudioRef.current.play();
 
-      setPlayerBullets((prevPlayerBullets) => [...prevPlayerBullets, newBullet]);
-      setBulletCount((prevCount) => prevCount + 1);
+      setPlayerBullets((prevPlayerBullets) => [...prevPlayerBullets, newPlayerBullet]);
+      setplayerBulletCount((prevCount) => prevCount + 1);
     } else {
       noBulletAudioRef.current.currentTime = 0;
       noBulletAudioRef.current.play();
     }
   };
+
+  const movePlayerBullet = () => {
+    setPlayerBullets((prevBullets) => {
+      const newPlayerBullets = prevBullets.map((bullet) => ({
+        ...bullet,
+        y: bullet.y - BULLET_SPEED,
+      }));
+
+
+      if (enemyPositions) {
+        // console.log("enemyPositions en movePlayerBullet", enemyPositions)
+        checkCollisions(newPlayerBullets, enemyPositions);
+      }
+
+      return newPlayerBullets;
+    });
+  };
+
 
   useEffect(() => {
     const handleKeyPress = (event) => {
@@ -48,50 +72,82 @@ const BulletController = ({ playerPosition, enemyPositions, setEnemyPositions })
     return () => {
       window.removeEventListener('keydown', handleKeyPress);
     };
-  }, [playerPosition, bulletCount]);
-
-  const moveBullet = () => {
-    setPlayerBullets((prevBullets) => {
-      const newBullets = prevBullets.map((bullet) => ({
-        ...bullet,
-        y: bullet.y - BULLET_SPEED,
-      }));
-
-
-      if (enemyPositions) {  // PROBLEMA EN EL FLUJO DE DATOS AQUÍ 
-        console.log("enemyPositions en moveBullet", enemyPositions)
-        checkCollisions(newBullets, enemyPositions);
-      }
-
-      return newBullets;
-    });
-  };
+  }, [playerPosition, playerBulletCount]);
 
 
   useEffect(() => {
-    const bulletInterval = setInterval(moveBullet, 100);
+    const playerBulletInterval = setInterval(movePlayerBullet, 100);
 
     return () => {
-      clearInterval(bulletInterval);
+      clearInterval(playerBulletInterval);
     };
   }, []);
 
   useEffect(() => {
-    const intervalTimer = setInterval(() => {
-      setBulletCount(0);
+    const intervalPlayerBulletsTimer = setInterval(() => {
+      setplayerBulletCount(0);
     }, MAX_BULLET_INTERVAL);
 
     return () => {
-      clearInterval(intervalTimer);
+      clearInterval(intervalPlayerBulletsTimer);
     };
   }, []);
 
+  // ENEMIES BULLETS LOGIC
+
+  const enemyShootBullet = (enemyIndex) => {
+    if (enemyPositions && enemyPositions[enemyIndex]) {
+      const enemyThatShoot = enemyPositions[enemyIndex];
+      const newEnemyBullet = {
+        x: enemyThatShoot.x + ENEMY_WIDTH / 2,
+        y: enemyThatShoot.y + ENEMY_HEIGHT,
+        isEnemyBullet: true,
+      };
+      shootAudioRef.current.currentTime = 0;
+      shootAudioRef.current.play();
+
+      setEnemyBullets((prevEnemyBullets) => [...prevEnemyBullets, newEnemyBullet]);
+    }
+  };
+
+  const moveEnemyBullet = () => {
+    setEnemyBullets((prevEnemyBullets) => {
+      const newEnemyBullets = prevEnemyBullets.map((bullet) => ({
+        ...bullet,
+        y: bullet.y + BULLET_SPEED_ENEMY,
+      }));
+
+      return newEnemyBullets;
+    });
+  };
+
+  useEffect(() => {
+    const enemyBulletInterval = setInterval(moveEnemyBullet, 100);
+
+    return () => {
+      clearInterval(enemyBulletInterval);
+    };
+  }, []);
+
+  useEffect(() => {
+    const intervalEnemyBulletsTimer = setInterval(enemyShootBullet, ENEMY_SHOOT_INTERVAL)
+
+    return () => {
+      clearInterval(intervalEnemyBulletsTimer);
+    };
+  }, []);
+
+
+
+  // COLLISIONS - KILL ENEMY
+
+
   const checkCollisions = (bullets, enemyPositions) => {
     // console.log('checking Collisions....');
-    console.log('enemyPositions in checkCollisions:', enemyPositions);
+    // console.log('enemyPositions en checkCollisions:', enemyPositions);
     bullets.forEach((bullet, bulletIndex) => {
       if (!enemyPositions) {
-        console.log('Enemy positions are undefined');
+        // console.log('enemyPositions es undefined');
         return;
       }
 
@@ -112,13 +168,13 @@ const BulletController = ({ playerPosition, enemyPositions, setEnemyPositions })
           bulletLeft <= enemyRight &&
           bulletRight >= enemyLeft
         ) {
-          console.log('Collision detected with bullet and enemy');
+          // console.log('Collision playerBullet - enemy ');
 
           // Eliminar la bala
           setPlayerBullets((prevBullets) => {
-            const newBullets = [...prevBullets];
-            newBullets.splice(bulletIndex, 1);
-            return newBullets;
+            const newPlayerBullets = [...prevBullets];
+            newPlayerBullets.splice(bulletIndex, 1);
+            return newPlayerBullets;
           });
 
           // Eliminar el enemigo
@@ -137,6 +193,13 @@ const BulletController = ({ playerPosition, enemyPositions, setEnemyPositions })
       <audio ref={shootAudioRef} src={shootSound}></audio>
       <audio ref={noBulletAudioRef} src={noBulletSound}></audio>
       {playerBullets.map((bullet, index) => (
+        <Bullet
+          key={index}
+          positionX={bullet.x}
+          positionY={bullet.y}
+        />
+      ))}
+      {enemyBullets.map((bullet, index) => (
         <Bullet
           key={index}
           positionX={bullet.x}
