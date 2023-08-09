@@ -5,6 +5,8 @@ import Lives from './Lives';
 
 const SpaceCanvas = ({ isGameActive }) => {
 
+
+
   return (
     <div className='spaceCanvas'>
       <EnemyController />

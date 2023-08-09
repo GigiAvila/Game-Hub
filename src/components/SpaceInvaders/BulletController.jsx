@@ -8,12 +8,15 @@ const BulletController = ({ playerPosition, enemyPositions, setEnemyPositions })
   const [playerBullets, setPlayerBullets] = useState([]);
   const [playerBulletCount, setplayerBulletCount] = useState(0);
   const [enemyBullets, setEnemyBullets] = useState([]);
+  const [enemyBulletCount, setEnemyBulletCount] = useState(0);
+  const [updatedPlayerBullets, setUpdatedPlayerBullets] = useState([]);
+
 
   // console.log('recibiendo enemyPositions...', enemyPositions)
   const ENEMY_WIDTH = 50;
   const ENEMY_HEIGHT = 20;
-  const ENEMY_SHOOT_INTERVAL = 3000; // Intervalo de tiempo para disparar (3 segundos)
-  const BULLET_SPEED_ENEMY = 15; // Velocidad de la bala enemiga
+  const ENEMY_SHOOT_INTERVAL = 2000;
+  const BULLET_SPEED_ENEMY = 15;
 
   const PLAYER_WIDTH = 84;
   const BULLET_SPEED = 10;
@@ -42,23 +45,34 @@ const BulletController = ({ playerPosition, enemyPositions, setEnemyPositions })
     }
   };
 
+
+
   const movePlayerBullet = () => {
     setPlayerBullets((prevBullets) => {
       const newPlayerBullets = prevBullets.map((bullet) => ({
         ...bullet,
+        x: bullet.x,
         y: bullet.y - BULLET_SPEED,
       }));
-
-
-      if (enemyPositions) {
-        // console.log("enemyPositions en movePlayerBullet", enemyPositions)
-        checkCollisions(newPlayerBullets, enemyPositions);
-      }
-
+      // console.log('Balas antes de verificar colisiones', newPlayerBullets);
+      setUpdatedPlayerBullets(newPlayerBullets);
+      checkCollisionsWithEnemies(newPlayerBullets);
       return newPlayerBullets;
     });
   };
 
+  const checkCollisionsWithEnemies = (newPlayerBullets) => {
+    if (enemyPositions) {
+      // console.log('checkingCollisionWithEnemies...')
+      setEnemyPositions((prevPositions) => {
+        if (prevPositions !== enemyPositions) {
+          // console.log('Balas del jugador para verificar colisiones:', newPlayerBullets);
+          checkCollisions(newPlayerBullets, prevPositions);
+        }
+        return prevPositions;
+      });
+    }
+  };
 
   useEffect(() => {
     const handleKeyPress = (event) => {
@@ -95,45 +109,44 @@ const BulletController = ({ playerPosition, enemyPositions, setEnemyPositions })
 
   // ENEMIES BULLETS LOGIC
 
-  const enemyShootBullet = (enemyIndex) => {
-    if (enemyPositions && enemyPositions[enemyIndex]) {
-      const enemyThatShoot = enemyPositions[enemyIndex];
-      const newEnemyBullet = {
-        x: enemyThatShoot.x + ENEMY_WIDTH / 2,
-        y: enemyThatShoot.y + ENEMY_HEIGHT,
-        isEnemyBullet: true,
-      };
-      shootAudioRef.current.currentTime = 0;
-      shootAudioRef.current.play();
-
-      setEnemyBullets((prevEnemyBullets) => [...prevEnemyBullets, newEnemyBullet]);
-    }
-  };
-
-  const moveEnemyBullet = () => {
-    setEnemyBullets((prevEnemyBullets) => {
-      const newEnemyBullets = prevEnemyBullets.map((bullet) => ({
+  const moveEnemyBullets = () => {
+    setEnemyBullets((prevBullets) => {
+      const newEnemyBullets = prevBullets.map((bullet) => ({
         ...bullet,
+        x: bullet.x,
         y: bullet.y + BULLET_SPEED_ENEMY,
       }));
-
       return newEnemyBullets;
     });
   };
 
   useEffect(() => {
-    const enemyBulletInterval = setInterval(moveEnemyBullet, 100);
+    const enemyBulletInterval = setInterval(moveEnemyBullets, 100);
+
+    const enemyShootInterval = setInterval(() => {
+      // console.log('enemyShootInterval...')
+      if (enemyPositions) {
+        // console.log('enemyPositions...')
+        setEnemyPositions((prevPositions) => {
+          if (prevPositions !== enemyPositions) {
+            // console.log('prevPositions', prevPositions);
+            const randomEnemyIndex = Math.floor(Math.random() * prevPositions.length);
+            const randomEnemy = prevPositions[randomEnemyIndex];
+            console.log('randomEnemy', randomEnemy)
+            const newEnemyBullet = {
+              x: randomEnemy.x + ENEMY_WIDTH / 2,
+              y: randomEnemy.y + ENEMY_HEIGHT,
+            };
+            setEnemyBullets((prevBullets) => [...prevBullets, newEnemyBullet]);
+          }
+          return prevPositions;
+        });
+      }
+    }, ENEMY_SHOOT_INTERVAL);
 
     return () => {
       clearInterval(enemyBulletInterval);
-    };
-  }, []);
-
-  useEffect(() => {
-    const intervalEnemyBulletsTimer = setInterval(enemyShootBullet, ENEMY_SHOOT_INTERVAL)
-
-    return () => {
-      clearInterval(intervalEnemyBulletsTimer);
+      clearInterval(enemyShootInterval);
     };
   }, []);
 
@@ -142,16 +155,12 @@ const BulletController = ({ playerPosition, enemyPositions, setEnemyPositions })
   // COLLISIONS - KILL ENEMY
 
 
-  const checkCollisions = (bullets, enemyPositions) => {
-    // console.log('checking Collisions....');
-    // console.log('enemyPositions en checkCollisions:', enemyPositions);
-    bullets.forEach((bullet, bulletIndex) => {
-      if (!enemyPositions) {
-        // console.log('enemyPositions es undefined');
-        return;
-      }
-
-      enemyPositions.forEach((enemy, enemyIndex) => {
+  const checkCollisions = (newPlayerBullets, prevPositions) => {
+    // console.log('checking Collisions....'); 
+    // console.log('enemyPositions en checkCollisions:', prevPositions);
+    // console.log('Bullets en checkCollisions:', newPlayerBullets);
+    newPlayerBullets.forEach((bullet, bulletIndex) => {
+      prevPositions.forEach((enemy, enemyIndex) => {
         const enemyTop = enemy.y;
         const enemyBottom = enemy.y + ENEMY_HEIGHT;
         const enemyLeft = enemy.x;
@@ -168,7 +177,7 @@ const BulletController = ({ playerPosition, enemyPositions, setEnemyPositions })
           bulletLeft <= enemyRight &&
           bulletRight >= enemyLeft
         ) {
-          // console.log('Collision playerBullet - enemy ');
+          console.log('Collision playerBullet - enemy ');
 
           // Eliminar la bala
           setPlayerBullets((prevBullets) => {
@@ -186,6 +195,7 @@ const BulletController = ({ playerPosition, enemyPositions, setEnemyPositions })
         }
       });
     });
+
   };
 
   return (

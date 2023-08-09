@@ -29,7 +29,6 @@ const EnemyController = () => {
   });
   const [isGameActive, setIsGameActive] = useState(true);
   const [enemyPositions, setEnemyPositions] = useState(initialEnemyPositions);
-  const [looseLife, setLooseLife] = useState();
   const [modalVisible, setModalVisible] = useState(false);
 
 
@@ -41,12 +40,12 @@ const EnemyController = () => {
   };
 
   const resetGame = () => {
+
     setIsGameActive(true);
     setEnemyPositions(initialEnemyPositions)
     setModalVisible(false);
     console.log('reset')
   };
-
 
   const endGame = () => {
     setIsGameActive(false);
@@ -57,7 +56,7 @@ const EnemyController = () => {
 
   useEffect(() => {
     startGame();
-    const moveInterval = setInterval(moveEnemies, 10);
+    const moveInterval = setInterval(moveEnemies, 50);
 
     return () => {
       clearInterval(moveInterval);
@@ -126,26 +125,31 @@ const EnemyController = () => {
   };
 
   return (
-    <div style={{ position: 'relative', width: '100%', height: '60vh' }}>
-      {enemyPositions.map((position, index) => (
-        <Enemy
-          key={index}
-          enemyNumber={enemyList[Math.floor(index / 10)][index % 10]}
-          positionX={position.x}
-          positionY={position.y}
+    <>
+      <div style={{ position: 'relative', width: '100%', height: '60vh' }}>
+        {enemyPositions.map((position, index) => (
+          <Enemy
+            key={index}
+            enemyNumber={enemyList[Math.floor(index / 10)][index % 10]}
+            positionX={position.x}
+            positionY={position.y}
+          />
+        ))}
+        <BulletController
+          enemyPositions={enemyPositions}
+          setEnemy
+          setEnemyPositions={setEnemyPositions}
         />
-      ))}
-      <BulletController
-        enemyPositions={enemyPositions}
-        setEnemy
-        setEnemyPositions={setEnemyPositions}
-      />
-      {!isGameActive && (
-        <Modal
-          message="☠️☠️☠️¡Lo siento! Haz perdido "
-        />
-      )}
-    </div>
+        {!isGameActive && (
+          <Modal
+            message="☠️☠️☠️¡Lo siento! Haz perdido "
+          />
+        )}
+      </div>
+      <button className='resetSpaceInvadersButton' onClick={() => resetGame()} >
+        Volver a jugar
+      </button>
+    </>
   );
 };
 

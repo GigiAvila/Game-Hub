@@ -18,7 +18,7 @@
 .spaceCanvas {
   background-image: url(./assets/spaceBackground.png);
   width: 80vw;
-  height: 70vh;
+  height: 60vh;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -79,6 +79,8 @@
   font-size: 2.2vw;
   width: 30vw;
   height: 3vh;
+  position: absolute;
+  bottom: 5px;
   
 }
 
@@ -94,5 +96,9 @@
     height: 5vw
   }
   
-  
+  .resetSpaceInvadersButton {
+    font-size: 0.7vw;
+    width: 8vw;
+    height: 4vh;
+  }
 }
