@@ -11,7 +11,7 @@ const BulletController = ({ playerPosition, enemyPositions, setEnemyPositions })
   const [enemyBulletCount, setEnemyBulletCount] = useState(0);
   const [updatedPlayerBullets, setUpdatedPlayerBullets] = useState([]);
 
-
+  // console.log('recibiendo playerPosition...', playerPosition)
   // console.log('recibiendo enemyPositions...', enemyPositions)
   const ENEMY_WIDTH = 50;
   const ENEMY_HEIGHT = 20;
@@ -124,15 +124,11 @@ const BulletController = ({ playerPosition, enemyPositions, setEnemyPositions })
     const enemyBulletInterval = setInterval(moveEnemyBullets, 100);
 
     const enemyShootInterval = setInterval(() => {
-      // console.log('enemyShootInterval...')
       if (enemyPositions) {
-        // console.log('enemyPositions...')
         setEnemyPositions((prevPositions) => {
           if (prevPositions !== enemyPositions) {
-            // console.log('prevPositions', prevPositions);
             const randomEnemyIndex = Math.floor(Math.random() * prevPositions.length);
             const randomEnemy = prevPositions[randomEnemyIndex];
-            console.log('randomEnemy', randomEnemy)
             const newEnemyBullet = {
               x: randomEnemy.x + ENEMY_WIDTH / 2,
               y: randomEnemy.y + ENEMY_HEIGHT,
@@ -149,6 +145,41 @@ const BulletController = ({ playerPosition, enemyPositions, setEnemyPositions })
       clearInterval(enemyShootInterval);
     };
   }, []);
+
+
+  // COLLISIONS - KILL PLAYER
+
+  useEffect(() => {
+    const checkCollisionsWithPlayer = () => {
+      console.log('Player position1:', playerPosition);
+      enemyBullets.forEach((bullet, bulletIndex) => {
+        if (
+          bullet.y >= 600 &&
+          playerPosition &&
+          bullet.x >= playerPosition.x &&
+          bullet.x <= playerPosition.x + PLAYER_WIDTH
+        ) {
+          console.log('Collision detected: Enemy bullet hit player');
+          console.log('Player position2:', playerPosition);
+
+          // Eliminar la bala utilizando un callback en setEnemyBullets
+          setEnemyBullets((prevBullets) => {
+            console.log('Removing enemy bullet at index', bulletIndex);
+            const newEnemyBullets = [...prevBullets];
+            newEnemyBullets.splice(bulletIndex, 1);
+            return newEnemyBullets;
+          });
+        }
+      });
+    };
+
+    const enemyBulletCheckInterval = setInterval(checkCollisionsWithPlayer, 100);
+
+    return () => {
+      clearInterval(enemyBulletCheckInterval);
+    };
+  }, [enemyBullets]);
+
 
 
 

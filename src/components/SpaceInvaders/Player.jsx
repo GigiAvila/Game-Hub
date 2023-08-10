@@ -10,8 +10,10 @@ const Player = ({ positionX, positionY, playerShootBullet }) => {
   };
 
   return (
-    <div className='playerContainer' style={playerStyle}>
-      <img className='playerImg' src={PlayerImg} alt="playerImg" />
+    <div className='playerContainer'>
+      <div className='playerWrapper' style={playerStyle}>
+        <img className='playerImg' src={PlayerImg} alt="playerImg" />
+      </div>
     </div>
   )
 }
