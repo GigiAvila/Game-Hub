@@ -4,12 +4,13 @@ import Bullet from './Bullet';
 import shootSound from './assets/bullet.mp3';
 import noBulletSound from './assets/noBullets.mp3';
 
-const BulletController = ({ playerPosition, enemyPositions, setEnemyPositions }) => {
+const BulletController = ({ playerPosition, enemyPositions, setEnemyPositions, isGameActive, setIsGameActive }) => {
   const [playerBullets, setPlayerBullets] = useState([]);
   const [playerBulletCount, setplayerBulletCount] = useState(0);
   const [enemyBullets, setEnemyBullets] = useState([]);
   const [enemyBulletCount, setEnemyBulletCount] = useState(0);
   const [updatedPlayerBullets, setUpdatedPlayerBullets] = useState([]);
+
 
   // console.log('recibiendo playerPosition...', playerPosition)
   // console.log('recibiendo enemyPositions...', enemyPositions)
@@ -120,38 +121,42 @@ const BulletController = ({ playerPosition, enemyPositions, setEnemyPositions })
     });
   };
 
+
   useEffect(() => {
-    const enemyBulletInterval = setInterval(moveEnemyBullets, 100);
+    if (isGameActive) {
+      const enemyBulletInterval = setInterval(moveEnemyBullets, 100);
 
-    const enemyShootInterval = setInterval(() => {
-      if (enemyPositions) {
-        setEnemyPositions((prevPositions) => {
-          if (prevPositions !== enemyPositions) {
-            const randomEnemyIndex = Math.floor(Math.random() * prevPositions.length);
-            const randomEnemy = prevPositions[randomEnemyIndex];
-            const newEnemyBullet = {
-              x: randomEnemy.x + ENEMY_WIDTH / 2,
-              y: randomEnemy.y + ENEMY_HEIGHT,
-            };
-            setEnemyBullets((prevBullets) => [...prevBullets, newEnemyBullet]);
-          }
-          return prevPositions;
-        });
-      }
-    }, ENEMY_SHOOT_INTERVAL);
+      const enemyShootInterval = setInterval(() => {
+        if (enemyPositions) {
+          setEnemyPositions((prevPositions) => {
+            if (prevPositions !== enemyPositions) {
+              const randomEnemyIndex = Math.floor(Math.random() * prevPositions.length);
+              const randomEnemy = prevPositions[randomEnemyIndex];
+              const newEnemyBullet = {
+                x: randomEnemy.x + ENEMY_WIDTH / 2,
+                y: randomEnemy.y + ENEMY_HEIGHT,
+              };
+              setEnemyBullets((prevBullets) => [...prevBullets, newEnemyBullet]);
+            }
+            return prevPositions;
+          });
+        }
+      }, ENEMY_SHOOT_INTERVAL);
 
-    return () => {
-      clearInterval(enemyBulletInterval);
-      clearInterval(enemyShootInterval);
-    };
-  }, []);
+      return () => {
+        clearInterval(enemyBulletInterval);
+        clearInterval(enemyShootInterval);
+      };
+    }
+  }, [isGameActive]);
+
 
 
   // COLLISIONS - KILL PLAYER
 
   useEffect(() => {
     const checkCollisionsWithPlayer = () => {
-      console.log('Player position1:', playerPosition);
+      // console.log('Player position1:', playerPosition);
       enemyBullets.forEach((bullet, bulletIndex) => {
         if (
           bullet.y >= 600 &&

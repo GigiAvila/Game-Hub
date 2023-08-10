@@ -9,10 +9,10 @@ const screenHeight = window.innerHeight;
 const PLAYER_WIDTH = 50;
 const PLAYER_HEIGHT = 60;
 
-const PLAYER_MAX_LEFT = 5;
-const PLAYER_MAX_RIGHT = 90 * window.innerWidth / 100 - PLAYER_WIDTH;
+const PLAYER_MAX_LEFT = 10;
+const PLAYER_MAX_RIGHT = 95 * window.innerWidth / 100 - PLAYER_WIDTH;
 
-const PLAYER_MAX_LEFT_DESKTOP = 100;
+const PLAYER_MAX_LEFT_DESKTOP = 500;
 const PLAYER_MAX_RIGHT_DESKTOP = 72 * window.innerWidth / 100 - PLAYER_WIDTH;
 
 
@@ -55,7 +55,7 @@ export const PlayerController = () => {
   }, []);
 
   return <>
-    <Player positionX={playerPosition.x} positionY={playerPosition.y} />;
+    <Player positionX={playerPosition.x} positionY={playerPosition.y} />
     <BulletController playerPosition={playerPosition} />
 
   </>

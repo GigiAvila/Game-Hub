@@ -3,20 +3,16 @@ import heartImg from './assets/heart.png';
 
 const initialLives = [heartImg, heartImg, heartImg, heartImg, heartImg];
 
-const Lives = ({ gameOver, looseLife }) => {
+const Lives = ({ CONDITION }) => {
   const [lives, setLives] = useState(initialLives);
 
   useEffect(() => {
-    if (gameOver) {
-      setLives([]);
+    if (CONDITION) {
+      if (lives.length > 0) {
+        setLives(prevLives => prevLives.slice(0, prevLives.length - 1));
+      }
     }
-  }, [gameOver]);
-
-  useEffect(() => {
-    if (looseLife) {
-      setLives(prevLives => prevLives.slice(0, prevLives.length - 1));
-    }
-  }, [looseLife]);
+  }, [CONDITION]);
 
   return (
     <div className='livesContainer'>

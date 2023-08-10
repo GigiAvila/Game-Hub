@@ -34,8 +34,8 @@
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  margin-top: 3vw;
-  width: 50vw;
+  margin-left: 10vw;
+  
 }
 
 .enemyRow{
@@ -52,12 +52,12 @@
 }
 
 .playerContainer {
-  width: 50vw;
+  width: 90vw;
   height: 15VW;
 }
+
 .playerWrapper {
   width: 15vw;
-  max-width: 25vw;
   height: 15VW;
 }
 
@@ -101,7 +101,7 @@
   }
 
   .enemyGrid {
-    margin-left: 5vw;
+    margin-left: 20vw;
     margin-right: 5vw;
   }
 

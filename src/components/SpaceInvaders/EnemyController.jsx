@@ -60,11 +60,9 @@ const EnemyController = () => {
   };
 
   const resetGame = () => {
-
     setIsGameActive(true);
     setEnemyPositions(initialEnemyPositions)
     setModalVisible(false);
-    console.log('reset')
   };
 
   const endGame = () => {
@@ -100,6 +98,10 @@ const EnemyController = () => {
     }
 
     setEnemyPositions((prevPositions) => {
+      if (!isGameActive) {
+        return prevPositions; // Si el juego no está activo, mantener las posiciones actuales
+      }
+
       const newPositions = prevPositions.map((position) => ({
         x: position.x,
         y: position.y,
@@ -110,7 +112,7 @@ const EnemyController = () => {
 
       if (enemyReachedBottom) {
         endGame();
-
+        return prevPositions; // No actualices las posiciones si el juego ha terminado
       }
 
       if (prevPositions[0].direction === 1) {
@@ -145,6 +147,7 @@ const EnemyController = () => {
     });
   };
 
+
   return (
     <>
       {!isGameActive && (
@@ -165,6 +168,9 @@ const EnemyController = () => {
           enemyPositions={enemyPositions}
           setEnemy
           setEnemyPositions={setEnemyPositions}
+          isGameActive
+          setIsGameActive={setIsGameActive}
+
         />
         {!isGameActive && (
           <Modal

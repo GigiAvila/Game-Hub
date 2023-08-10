@@ -28,7 +28,8 @@ const SpaceCanvas = ({ isGameActive }) => {
       <EnemyController />
       <PlayerController />
       {!isGameActive &&
-        <Lives isGameActive={isGameActive} />}
+        <Lives
+        />}
 
     </div>
   );
