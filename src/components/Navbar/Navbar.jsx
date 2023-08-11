@@ -10,7 +10,7 @@ import hangmanImg from './NavbarAssets/hangman.png';
 import simonImg from './NavbarAssets/simon.jpg';
 import snakeImg from './NavbarAssets/snake.jpg';
 import whackAMoleImg from './NavbarAssets/whackamole.jpg';
-import spaceInvadersImg from './NavbarAssets/Spaceinvaders.jpg';
+import spaceInvadersImg from './NavbarAssets/spaceinvaders.jpg';
 import arrowLeftImg from './NavbarAssets/arrowleft.png';
 import arrowRightImg from './NavbarAssets/arrowright.png';
 
