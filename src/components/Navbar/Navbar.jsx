@@ -9,10 +9,10 @@ import tetrisImg from './NavbarAssets/tetris1.jpg';
 import hangmanImg from './NavbarAssets/hangman.png';
 import simonImg from './NavbarAssets/simon.jpg';
 import snakeImg from './NavbarAssets/snake.jpg';
-import whackAMoleImg from './NavbarAssets/whack-a-mole.jpg';
-import spaceInvadersImg from './NavbarAssets/Space-invaders.jpg';
-import arrowLeftImg from './NavbarAssets/arrow-left.png';
-import arrowRightImg from './NavbarAssets/arrow-right.png';
+import whackAMoleImg from './NavbarAssets/whackamole.jpg';
+import spaceInvadersImg from './NavbarAssets/Spaceinvaders.jpg';
+import arrowLeftImg from './NavbarAssets/arrowleft.png';
+import arrowRightImg from './NavbarAssets/arrowright.png';
 
 const Navbar = () => {
   const carouselRef = useRef(null);
