@@ -24,7 +24,10 @@ const SudokuBoard = ({ board, onCellChangeBoard }) => {
   return (
     <div className="SudokuBoard">
       {board.map((row, rowIndex) => (
-        <div className="row" key={rowIndex}>
+        <div
+          className={`row ${rowIndex === 0 || rowIndex === 3 || rowIndex === 6 ? 'border' : ''}`}
+          key={rowIndex}
+        >
           {row.map((cell, colIndex) => (
             <Cell
               key={`${rowIndex}-${colIndex}`}

@@ -3,7 +3,7 @@ import './Footer.css'
 
 const Footer = () => {
   return (
-    <footer>Created by Gisela Avila with ❤️</footer>
+    <footer>Created by Gigi Avila with ❤️</footer>
   )
 }
 

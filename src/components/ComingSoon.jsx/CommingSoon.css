@@ -1,0 +1,39 @@
+@import url('https://fonts.cdnfonts.com/css/sf-pixelate');
+
+.commingSoonContainer {
+    width: 100vw;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.commingSoon {
+    font-size: 8vw;
+    font-family: 'SF Pixelate', sans-serif;
+    color: white;
+    border-radius: 5px;
+    padding: 4vw;
+    border: 4px solid #0027a9;
+    overflow: hidden;
+    white-space: nowrap;
+    animation: typing 4s steps(20, end), blink-caret .5s step-end infinite;
+}
+
+@keyframes typing {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes blink-caret {
+    from, to {
+        border-color: transparent;
+    }
+    50% {
+        border-color: #0027a9;
+    }
+}

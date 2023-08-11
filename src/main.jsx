@@ -13,7 +13,7 @@ import Pagina6 from './pages/Pagina6.jsx'
 import Pagina7 from './pages/Pagina7.jsx'
 import Pagina8 from './pages/Pagina8.jsx'
 import Pagina9 from './pages/Pagina9.jsx'
-import Pagina10 from './pages/Pagina10.jsx'
+
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -30,7 +30,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/pagina7" element={<Pagina7 />} />
         <Route path="/pagina8" element={<Pagina8 />} />
         <Route path="/pagina9" element={<Pagina9 />} />
-        <Route path="/pagina10" element={<Pagina10 />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,

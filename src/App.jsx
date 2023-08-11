@@ -2,7 +2,7 @@
 import './App.css'
 import Header from './components/Header/Header'
 import Footer from './components/Footer/Footer'
-import Navbar from './pages/Navbar'
+import NavbarPage from './pages/NavbarPage'
 import Main from './pages/Main'
 
 function App() {
@@ -11,7 +11,7 @@ function App() {
   return (
     <>
       <Header />
-      <Navbar />
+      <NavbarPage />
       <Main />
       <Footer />
     </>

@@ -7,7 +7,12 @@
   justify-content: center;
   align-items: center;
   gap: 1vw;
-  margin-top: 1vw
+  margin-top: 1vw;
+
+}
+
+.titleContainer > h1 {
+  font-size: 6vw;
 }
 
 .TicTacToe-container {
@@ -92,6 +97,12 @@
 }
 
 @media screen and (min-width: 1023px){
+
+
+  .titleContainer > h1{
+    font-size: 3vw;
+  }
+
   .square {
     width: 8rem;
     height: 8rem;

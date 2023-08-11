@@ -6,8 +6,10 @@ const Cell = ({ value, isFixed, onChange }) => {
     onChange(newValue);
   };
 
+
   return (
     <input
+      className='cell'
       type="number"
       value={value === 0 ? '' : value}
       min="1"

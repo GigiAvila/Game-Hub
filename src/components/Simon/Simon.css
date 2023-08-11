@@ -13,10 +13,11 @@ body, html {
   height: 70%;
 }
 
-.title {
+.simonTitle {
   font-family: 'SF Pixelate', sans-serif;
   color: white;
   margin-top: 1vw;
+  font-size: 6vw;
 }
 
 .Simonboard {
@@ -114,3 +115,10 @@ body, html {
   margin: 0.5vw auto;
 }
 
+
+@media screen and (min-width: 1023px) {
+
+  .simonTitle {
+    font-size: 3vw;
+}
+}

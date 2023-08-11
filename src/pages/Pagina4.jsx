@@ -1,13 +1,13 @@
 import React from 'react'
 import Header from '../components/Header/Header'
 import Loading from '../components/Loading/Loading'
+import CommingSoon from '../components/ComingSoon.jsx/CommingSoon'
 
 const Pagina4 = () => {
   return (
     <>
       <Header />
-      <Loading />
-      <div>Pagina4</div>
+      <CommingSoon />
     </>
 
   )
