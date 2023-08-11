@@ -156,7 +156,7 @@ const Pagina6 = () => {
       ) : (
         <div className='simonGameContainer'>
           <h1 className='simonTitle'>Simon says</h1>
-          <div className='resetButtonContainer'>
+          <div className='resetSimonButtonContainer'>
             <button onClick={handleResetGame}>Volver a jugar</button>
           </div>
           <div className='Simonboard'>
