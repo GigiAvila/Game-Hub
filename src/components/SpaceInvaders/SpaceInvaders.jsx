@@ -4,7 +4,7 @@ import React from 'react'
 import Header from '../Header/Header';
 import Loading from '../Loading/Loading';
 import SpaceCanvas from './SpaceCanvas';
-
+import { SpaceInvadersProvider } from './SpaceInvadersContext'
 import './SpaceInvaders.css'
 
 
@@ -29,7 +29,9 @@ const SpaceInvaders = () => {
       ) : (
         <div className='spaceInvadersContainer'>
           <h1 className='titleSpaceInvanders'>Space Invaders</h1>
-          <SpaceCanvas />
+          <SpaceInvadersProvider>
+            <SpaceCanvas />
+          </SpaceInvadersProvider>
         </div>
       )}
     </>

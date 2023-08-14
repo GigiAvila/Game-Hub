@@ -1,11 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import EnemyController from './EnemyController';
 import PlayerController from './PlayerController';
+import CollisionWithEnemy from './CollisionWithEnemy';
+import CollisionWithPlayer from './CollisionWithPlayer';
 import Lives from './Lives';
+import Modal from '../Modal/Modal';
+import { useSpaceInvadersContext } from './SpaceInvadersContext';
 
-const SpaceCanvas = ({ isGameActive }) => {
+
+
+
+
+
+const SpaceCanvas = () => {
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [isGameActive, setIsGameActive] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const { resetEnemyPositions } = useSpaceInvadersContext();
 
   useEffect(() => {
     const handleResize = () => {
@@ -23,13 +36,47 @@ const SpaceCanvas = ({ isGameActive }) => {
     };
   }, [windowWidth]);
 
+
+  const resetGame = () => {
+    setIsGameActive(true);
+    resetEnemyPositions;
+    setModalVisible(false);
+  };
+
+
+
+  const startGame = () => {
+    setIsGameActive(true);
+    setModalVisible(false);
+  };
+
+
+
+  const endGame = () => {
+    setIsGameActive(false);
+    setModalVisible(true);
+  };
+
+
   return (
     <div className='spaceCanvas'>
-      <EnemyController />
+      {!isGameActive && (
+        <button className='resetSpaceInvadersButton' onClick={() => resetGame()} >
+          Volver a jugar
+        </button>
+      )}
+      <EnemyController isGameActive={isGameActive} startGame={startGame} endGame={endGame} />
       <PlayerController />
-      {!isGameActive &&
+      {isGameActive &&
         <Lives
         />}
+      {!isGameActive && (
+        <Modal
+          message="☠️☠️☠️¡Lo siento! Haz perdido "
+        />
+      )}
+      <CollisionWithEnemy />
+      <CollisionWithPlayer />
 
     </div>
   );
