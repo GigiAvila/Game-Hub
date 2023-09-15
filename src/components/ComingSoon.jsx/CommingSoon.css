@@ -1,6 +1,6 @@
 @import url('https://fonts.cdnfonts.com/css/sf-pixelate');
 
-.commingSoonContainer {
+.comingSoonContainer {
     width: 100vw;
     height: 80vh;
     display: flex;
@@ -8,7 +8,7 @@
     align-items: center;
 }
 
-.commingSoon {
+.comingSoon {
     font-size: 8vw;
     font-family: 'SF Pixelate', sans-serif;
     color: white;

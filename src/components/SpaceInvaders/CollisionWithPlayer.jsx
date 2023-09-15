@@ -11,14 +11,16 @@ const CollisionWithPlayer = () => {
   // console.log(enemyBullets);// está ok
   // console.log(enemyPositions); // está ok
   // console.log(playerPosition) // está ok
-  // console.log(playerBullets) // tiene la posicion inicial del playerPosition
+  // console.log(playerBullets) // tiene la posicion inicial del playerPosition. arrastra error desde el usePlayerBullets
+
+
 
   const checkCollisionsWithPlayer = () => {
     // console.log('checkingCollisionsWithPlayer...'); // está ok
 
     enemyBullets.forEach((bullet, bulletIndex) => {
-      // console.log('bullet.y:', bullet.y) SE VE PERO SI REFRESCO LA PAGINA NO
-      // console.log('playerPosition.y:', playerPosition.y);SE VE PERO SI REFRESCO LA PAGINA NO
+      // console.log('bullet.y:', bullet.y)
+      // console.log('playerPosition.y:', playerPosition.y)
       if (
         playerPosition &&
         bullet.y + BULLET_HEIGHT >= playerPosition.y &&

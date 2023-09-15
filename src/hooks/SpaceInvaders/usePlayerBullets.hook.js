@@ -14,7 +14,8 @@ export const usePlayerBullets = () => {
   const [isShooting, setIsShooting] = useState(false);
 
   const { playerPosition } = usePlayer();
-  // playerPosition undefined
+  console.log(playerPosition);
+
 
 
   const playShootSound = () => {

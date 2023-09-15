@@ -3,8 +3,8 @@ import './CommingSoon.css'
 
 const CommingSoon = () => {
   return (
-    <div className='commingSoonContainer'>
-      <h1 className='commingSoon'>COMMING SOON ...</h1>
+    <div className='comingSoonContainer'>
+      <h1 className='comingSoon'>COMING SOON ...</h1>
 
     </div>
   )
